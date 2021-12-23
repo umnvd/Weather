@@ -4,7 +4,7 @@ import com.umnvd.weather.data.cities.CitiesListItemTuple
 import com.umnvd.weather.data.cities.CityEntity
 import com.umnvd.weather.data.network.ICON_BASE_URL
 import com.umnvd.weather.data.weather.current.CurrentWeatherNetworkModel
-import com.umnvd.weather.data.weather.forecast.WeatherForecastEntity
+import com.umnvd.weather.data.weather.forecast.DayWeatherForecastEntity
 import com.umnvd.weather.data.weather.forecast.WeatherForecastNetworkModel
 import com.umnvd.weather.model.*
 import java.util.*
@@ -28,10 +28,10 @@ fun CitiesListItemTuple.toCitiesListItem(currentCityId: Long): CitiesListItem {
     )
 }
 
-fun WeatherForecastNetworkModel.toWeatherForecastEntities(city: City): List<WeatherForecastEntity> {
+fun WeatherForecastNetworkModel.toDayWeatherForecastEntities(city: City): List<DayWeatherForecastEntity> {
     val currentTime = System.currentTimeMillis()
     return daily.mapIndexed { index, daily ->
-        WeatherForecastEntity(
+        DayWeatherForecastEntity(
             updatedAt = currentTime,
             cityId = city.id,
             dayId = index.toLong() + 1,
@@ -53,8 +53,8 @@ fun WeatherForecastNetworkModel.toWeatherForecastEntities(city: City): List<Weat
     }
 }
 
-fun WeatherForecastEntity.toWeatherForecast(): WeatherForecast {
-    return WeatherForecast(
+fun DayWeatherForecastEntity.toDayWeatherForecast(): DayWeatherForecast {
+    return DayWeatherForecast(
         date = Date(date),
         iconUrl = iconUrl,
         description = description,

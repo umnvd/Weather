@@ -18,7 +18,7 @@ import com.umnvd.weather.data.cities.CityEntity
         )
     ]
 )
-data class WeatherForecastEntity(
+data class DayWeatherForecastEntity(
     @ColumnInfo(name = "city_id")
     val cityId: Long,
     @ColumnInfo(name = "day_id")

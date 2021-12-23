@@ -1,4 +1,4 @@
-package com.umnvd.weather.data
+package com.umnvd.weather.data.cities
 
 import com.umnvd.weather.model.CitiesListItem
 import com.umnvd.weather.model.City

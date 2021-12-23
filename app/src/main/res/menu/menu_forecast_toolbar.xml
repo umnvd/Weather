@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/set_as_current"
+        android:id="@+id/item_set_current"
+        android:icon="@drawable/ic_current_city"
+        app:showAsAction="ifRoom"
+        android:contentDescription="@string/set_as_current_description"
+        />
+
+    <item android:title="@string/share"
+        android:id="@+id/item_share"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="ifRoom"
+        android:contentDescription="@string/share_description"
+        />
+
+</menu>

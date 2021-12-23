@@ -15,22 +15,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="@tools:sample/cities"
-        app:layout_constraintEnd_toStartOf="@id/itemFavoriteCityImageView"
+        app:layout_constraintEnd_toStartOf="@id/itemCityIsCurrentImageView"
         android:layout_marginEnd="@dimen/margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
-        android:id="@+id/itemFavoriteCityImageView"
+        android:id="@+id/itemCityIsCurrentImageView"
         android:layout_width="@dimen/current_city_icon_size"
         android:layout_height="@dimen/current_city_icon_size"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_favorite"
+        android:src="@drawable/ic_current_city_active"
         tools:visibility="visible"
+        android:contentDescription="@string/current_city_description"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

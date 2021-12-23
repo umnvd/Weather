@@ -15,4 +15,9 @@
     <string name="sunset">Заход солнца</string>
     <string name="try_again_message">Что-то пошло не так. Повторите позже.</string>
     <string name="try_again">Повторить</string>
+    <string name="set_as_current">Установить текущим</string>
+    <string name="set_as_current_description">Установить город текущим</string>
+    <string name="share">Поделиться</string>
+    <string name="share_description">Поделиться прогнозом погоды</string>
+    <string name="current_city_description">Текущий город</string>
 </resources>

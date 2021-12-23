@@ -1,6 +1,7 @@
 package com.umnvd.weather.data.cities
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
@@ -31,5 +32,8 @@ interface CitiesDao {
         }
         updatePosition(-1, toPosition)
     }
+
+    @Insert
+    suspend fun insertCities(cities: List<CityEntity>)
 
 }

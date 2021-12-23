@@ -18,4 +18,9 @@
     <string name="sunset">Sunset</string>
     <string name="try_again_message">Something went wrong. Try again later.</string>
     <string name="try_again">Try again</string>
+    <string name="set_as_current">Set as current</string>
+    <string name="set_as_current_description">Set as current city</string>
+    <string name="share">Share</string>
+    <string name="share_description">Share weather forecast</string>
+    <string name="current_city_description">City is current</string>
 </resources>

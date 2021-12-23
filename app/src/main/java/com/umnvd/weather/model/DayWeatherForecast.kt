@@ -2,7 +2,7 @@ package com.umnvd.weather.model
 
 import java.util.*
 
-data class WeatherForecast(
+data class DayWeatherForecast(
     val date: Date,
     val iconUrl: String,
     val description: String,

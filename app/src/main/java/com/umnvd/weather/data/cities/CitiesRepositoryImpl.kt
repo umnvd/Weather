@@ -1,7 +1,6 @@
 package com.umnvd.weather.data.cities
 
 import androidx.datastore.core.DataStore
-import com.umnvd.weather.data.CitiesRepository
 import com.umnvd.weather.data.toCitiesListItem
 import com.umnvd.weather.data.toCity
 import com.umnvd.weather.model.CitiesListItem
@@ -20,7 +19,7 @@ class CitiesRepositoryImpl(
         citiesDao.getCities(),
         currentCityDataStore.data
     ) { cityEntities: List<CitiesListItemTuple>, currentCityId: Long ->
-        return@combine cityEntities.map { it.toCitiesListItem(currentCityId) }
+        cityEntities.map { it.toCitiesListItem(currentCityId) }
     }.flowOn(ioDispatcher)
 
     override suspend fun moveCity(fromPosition: Int, toPosition: Int) = withContext(ioDispatcher) {
@@ -28,8 +27,8 @@ class CitiesRepositoryImpl(
     }
 
     override suspend fun changeCurrentCity(newId: Long) = withContext(ioDispatcher) {
-        currentCityDataStore.updateData {
-            return@updateData if (it == newId) {
+        return@withContext currentCityDataStore.updateData {
+            if (it == newId) {
                 CurrentCityDataStore.UNIDENTIFIED_CITY_ID
             } else {
                 newId

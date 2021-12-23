@@ -13,11 +13,11 @@ import kotlinx.coroutines.withContext
 class CurrentWeatherRepositoryImpl(
     private val weatherApi: WeatherApi,
     private val ioDispatcher: IoDispatcher
-) {
+): CurrentWeatherRepository {
 
-    suspend fun getCurrentWeather(city: City): FinalResult<CurrentWeather> =
+    override suspend fun getCurrentWeather(city: City): FinalResult<CurrentWeather> =
         withContext(ioDispatcher.value) {
-            weatherApi.getCurrentWeather(city.id)
+            return@withContext weatherApi.getCurrentWeather(city.id)
                 .toFinalResult()
                 .map { it.toCurrentWeather(city) }
         }

@@ -7,3 +7,9 @@ data class City(
     val lon: Float,
     val isCurrent: Boolean
 )
+
+data class CitiesListItem(
+    val id: Long,
+    val name: String,
+    val isCurrent: Boolean
+)

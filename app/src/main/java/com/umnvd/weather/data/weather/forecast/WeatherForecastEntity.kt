@@ -2,15 +2,27 @@ package com.umnvd.weather.data.weather.forecast
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.ForeignKey
+import com.umnvd.weather.data.cities.CityEntity
 
-@Entity(tableName = "weather_forecasts")
+@Entity(
+    tableName = "weather_forecasts",
+    primaryKeys = ["city_id", "day_id"],
+    foreignKeys = [
+        ForeignKey(
+            entity = CityEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["city_id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        )
+    ]
+)
 data class WeatherForecastEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val id: Long = -1,
     @ColumnInfo(name = "city_id")
     val cityId: Long,
+    @ColumnInfo(name = "day_id")
+    val dayId: Long,
     @ColumnInfo(name = "date")
     val date: Long,
     @ColumnInfo(name = "icon_url")
@@ -21,9 +33,9 @@ data class WeatherForecastEntity(
     val humidity: Int,
     @ColumnInfo(name = "pressure")
     val pressure: Int,
-    @ColumnInfo(name = "wind")
+    @ColumnInfo(name = "wind_speed")
     val windSpeed: Int,
-    @ColumnInfo(name = "wind_dir")
+    @ColumnInfo(name = "wind_deg")
     val windDeg: Int,
     @ColumnInfo(name = "precipitation_prob")
     val precipitationProb: Int,
@@ -41,4 +53,8 @@ data class WeatherForecastEntity(
     val sunset: Long,
     @ColumnInfo(name = "updated_at")
     val updatedAt: Long
-)
+) {
+
+
+
+}

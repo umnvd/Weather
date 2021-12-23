@@ -2,6 +2,7 @@ package com.umnvd.weather.data.cities
 
 import androidx.datastore.core.DataStore
 import com.umnvd.weather.data.CitiesRepository
+import com.umnvd.weather.data.toCity
 import com.umnvd.weather.model.City
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -17,13 +18,11 @@ class CitiesRepositoryImpl(
         citiesDao.getCities(),
         currentCityDataStore.data
     ) { cityEntities: List<CityEntity>, currentCityId: Long ->
-        return@combine cityEntities
-            .map { mapToCity(it, currentCityId) }
-    }
-        .flowOn(ioDispatcher)
+        return@combine cityEntities.map { it.toCity(currentCityId) }
+    }.flowOn(ioDispatcher)
 
     override suspend fun moveCity(fromPosition: Int, toPosition: Int) = withContext(ioDispatcher) {
-        citiesDao.updatePositions(fromPosition, toPosition)
+        return@withContext citiesDao.updatePositions(fromPosition, toPosition)
     }
 
     override suspend fun changeCurrentCity(newId: Long) = withContext(ioDispatcher) {
@@ -36,27 +35,14 @@ class CitiesRepositoryImpl(
         }
     }
 
-    override fun getCity(id: Long): Flow<City> = currentCityDataStore.data
-        .map {
-            val cityEntity = citiesDao.getCity(id)
-            mapToCity(cityEntity, it)
-        }
-        .flowOn(ioDispatcher)
+    override fun getCity(id: Long): Flow<City> {
+        return currentCityDataStore.data
+            .map { citiesDao.getCity(id).toCity(it) }
+            .flowOn(ioDispatcher)
+    }
 
     override suspend fun getCurrentCity(): City = withContext(ioDispatcher) {
         val currentCityId = currentCityDataStore.data.last()
-        val currentCityEntity = citiesDao.getCity(currentCityId)
-        return@withContext mapToCity(currentCityEntity, currentCityId)
+        return@withContext citiesDao.getCity(currentCityId).toCity(currentCityId)
     }
-
-    private fun mapToCity(cityEntity: CityEntity, currentCityId: Long): City {
-        return City(
-            id = cityEntity.id,
-            name = cityEntity.name,
-            lat = cityEntity.lat,
-            lon = cityEntity.lon,
-            isCurrent = cityEntity.id == currentCityId
-        )
-    }
-
 }

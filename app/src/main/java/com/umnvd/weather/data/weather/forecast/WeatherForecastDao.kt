@@ -1,15 +1,17 @@
 package com.umnvd.weather.data.weather.forecast
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeatherForecastDao {
 
-//    @Query()
+    @Query("SELECT * FROM weather_forecasts WHERE city_id = :cityId")
     suspend fun getWeatherForecast(cityId: Long): List<WeatherForecastEntity>
 
-//    @Query()
-    suspend fun saveWeatherForecast(forecast: List<WeatherForecastEntity>)
+    @Insert
+    suspend fun insertWeatherForecast(forecast: List<WeatherForecastEntity>)
 
 }

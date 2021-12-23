@@ -1,5 +1,7 @@
 package com.umnvd.weather.data.weather.forecast
 
+import com.umnvd.weather.data.toWeatherForecast
+import com.umnvd.weather.data.toWeatherForecastEntities
 import com.umnvd.weather.data.util.*
 import com.umnvd.weather.data.weather.WeatherApi
 import com.umnvd.weather.model.City
@@ -13,23 +15,20 @@ class WeatherForecastRepositoryImpl(
     private val ioDispatcher: IoDispatcher
 ) {
 
-    fun getWeatherForecast(city: City): FlowResult<List<WeatherForecast>> =
-        networkBoundResult(
-            fetchFromLocal = { weatherForecastDao.getWeatherForecast(city.id) },
-            shouldFetchFromRemote = { shouldFetchFromRemote(it) },
-            fetchFromRemote = { weatherApi.getWeatherForecast(city.lat, city.lon) },
-            remoteToLocalMapper = { it.toWeatherForecastEntityList(city) },
-            saveLocalData = { weatherForecastDao.saveWeatherForecast(it) }
-        )
-            .map { result ->
-                result.map { entities ->
-                    entities.toWeatherForecastList()
-                }
-            }
-            .flowOn(ioDispatcher.value)
+    fun getWeatherForecast(city: City): FlowResult<List<WeatherForecast>> = networkBoundResult(
+        fetchFromLocal = { weatherForecastDao.getWeatherForecast(city.id) },
+        shouldFetchFromRemote = { shouldFetchFromRemote(it) },
+        fetchFromRemote = { weatherApi.getWeatherForecast(city.lat, city.lon) },
+        remoteToLocalMapper = { it.toWeatherForecastEntities(city) },
+        saveLocalData = { weatherForecastDao.insertWeatherForecast(it) }
+    ).map { entitiesResult ->
+        entitiesResult.map { entitiesList ->
+            entitiesList.map(WeatherForecastEntity::toWeatherForecast)
+        }
+    }.flowOn(ioDispatcher.value)
 
     private fun shouldFetchFromRemote(localData: List<WeatherForecastEntity>): Boolean {
-        return localData.isEmpty() || System.currentTimeMillis() < (localData.first().updatedAt + UPDATE_INTERVAL)
+        return localData.isEmpty() || System.currentTimeMillis() > (localData.first().updatedAt + UPDATE_INTERVAL)
     }
 
     companion object {

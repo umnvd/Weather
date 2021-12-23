@@ -3,6 +3,7 @@ package com.umnvd.weather.data.cities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.umnvd.weather.model.City
 
 @Entity(tableName = "cities")
 data class CityEntity(

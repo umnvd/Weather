@@ -2,7 +2,9 @@ package com.umnvd.weather.data.cities
 
 import androidx.datastore.core.DataStore
 import com.umnvd.weather.data.CitiesRepository
+import com.umnvd.weather.data.toCitiesListItem
 import com.umnvd.weather.data.toCity
+import com.umnvd.weather.model.CitiesListItem
 import com.umnvd.weather.model.City
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -14,11 +16,11 @@ class CitiesRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : CitiesRepository {
 
-    override fun getCities(): Flow<List<City>> = combine(
+    override fun getCities(): Flow<List<CitiesListItem>> = combine(
         citiesDao.getCities(),
         currentCityDataStore.data
-    ) { cityEntities: List<CityEntity>, currentCityId: Long ->
-        return@combine cityEntities.map { it.toCity(currentCityId) }
+    ) { cityEntities: List<CitiesListItemTuple>, currentCityId: Long ->
+        return@combine cityEntities.map { it.toCitiesListItem(currentCityId) }
     }.flowOn(ioDispatcher)
 
     override suspend fun moveCity(fromPosition: Int, toPosition: Int) = withContext(ioDispatcher) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleDiagramView">
+        <attr name="value" format="integer" />
+        <attr name="filledColor" format="color" />
+        <attr name="blankColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="clipColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="arcWidth" format="dimension" />
+    </declare-styleable>
+
+    <attr name="circleDiagramStyle" format="reference" />
+
+    <style name="CircleDiagramDefaultStyle">
+        <item name="filledColor">#000000</item>
+        <item name="blankColor">#888888</item>
+        <item name="textColor">#000000</item>
+        <item name="clipColor">#ffffff</item>
+    </style>
+
+</resources>

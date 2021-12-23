@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <dimen name="text_large">24sp</dimen>
+    <dimen name="text_medium">20sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_main_temperature">64sp</dimen>
+
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+
+    <dimen name="weather_icon_size">50dp</dimen>
+    <dimen name="humidity_view_size">100dp</dimen>
+    <dimen name="current_city_icon_size">32dp</dimen>
+    <dimen name="humidity_arc_width">15dp</dimen>
+
+</resources>

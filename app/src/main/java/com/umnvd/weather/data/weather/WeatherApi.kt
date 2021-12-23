@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface WeatherApi {
 
     @GET("data/2.5/onecall?exclude=current,minutely,hourly,alerts")
-    suspend fun getWeatherForecast(
+    suspend fun getWeatherForecasts(
         @Query("lat") cityLat: Float,
         @Query("lon") cityLon: Float
     ): Response<WeatherForecastNetworkModel>

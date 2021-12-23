@@ -15,12 +15,12 @@ class WeatherForecastRepositoryImpl(
     private val ioDispatcher: IoDispatcher
 ) {
 
-    fun getWeatherForecast(city: City): FlowResult<List<WeatherForecast>> = networkBoundResult(
-        fetchFromLocal = { weatherForecastDao.getWeatherForecast(city.id) },
+    fun getWeatherForecasts(city: City): FlowResult<List<WeatherForecast>> = networkBoundResult(
+        fetchFromLocal = { weatherForecastDao.getWeatherForecasts(city.id) },
         shouldFetchFromRemote = { shouldFetchFromRemote(it) },
-        fetchFromRemote = { weatherApi.getWeatherForecast(city.lat, city.lon) },
+        fetchFromRemote = { weatherApi.getWeatherForecasts(city.lat, city.lon) },
         remoteToLocalMapper = { it.toWeatherForecastEntities(city) },
-        saveLocalData = { weatherForecastDao.insertWeatherForecast(it) }
+        saveLocalData = { weatherForecastDao.insertWeatherForecasts(it) }
     ).map { entitiesResult ->
         entitiesResult.map { entitiesList ->
             entitiesList.map(WeatherForecastEntity::toWeatherForecast)

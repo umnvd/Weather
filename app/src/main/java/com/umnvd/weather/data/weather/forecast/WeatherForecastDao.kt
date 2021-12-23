@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface WeatherForecastDao {
 
     @Query("SELECT * FROM weather_forecasts WHERE city_id = :cityId")
-    suspend fun getWeatherForecast(cityId: Long): List<WeatherForecastEntity>
+    suspend fun getWeatherForecasts(cityId: Long): List<WeatherForecastEntity>
 
     @Insert
-    suspend fun insertWeatherForecast(forecast: List<WeatherForecastEntity>)
+    suspend fun insertWeatherForecasts(forecast: List<WeatherForecastEntity>)
 
 }

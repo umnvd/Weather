@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
+    <string name="wind">Ветер</string>
+    <string name="precipitation_probability">Вероятность\nосадков</string>
+    <string name="weather_icon_description">Иконка погоды</string>
+    <string name="morning">Утро</string>
+    <string name="day">День</string>
+    <string name="evening">Вечер</string>
+    <string name="night">Ночь</string>
+    <string name="sunrise">Восход солнца</string>
+    <string name="sunset">Заход солнца</string>
+    <string name="try_again_message">Что-то пошло не так. Повторите позже.</string>
+    <string name="try_again">Повторить</string>
+</resources>

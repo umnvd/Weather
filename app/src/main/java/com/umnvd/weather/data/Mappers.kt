@@ -1,14 +1,12 @@
 package com.umnvd.weather.data
 
+import com.umnvd.weather.data.cities.CitiesListItemTuple
 import com.umnvd.weather.data.cities.CityEntity
 import com.umnvd.weather.data.network.ICON_BASE_URL
 import com.umnvd.weather.data.weather.current.CurrentWeatherNetworkModel
 import com.umnvd.weather.data.weather.forecast.WeatherForecastEntity
 import com.umnvd.weather.data.weather.forecast.WeatherForecastNetworkModel
-import com.umnvd.weather.model.City
-import com.umnvd.weather.model.CurrentWeather
-import com.umnvd.weather.model.WeatherForecast
-import com.umnvd.weather.model.toWindDirection
+import com.umnvd.weather.model.*
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -18,6 +16,14 @@ import kotlin.math.roundToInt
         name = this.name,
         lat = this.lat,
         lon = this.lon,
+        isCurrent = this.id == currentCityId
+    )
+}
+
+fun CitiesListItemTuple.toCitiesListItem(currentCityId: Long): CitiesListItem {
+    return CitiesListItem(
+        id = this.id,
+        name = this.name,
         isCurrent = this.id == currentCityId
     )
 }
@@ -64,10 +70,6 @@ fun WeatherForecastEntity.toWeatherForecast(): WeatherForecast {
         sunrise = Date(sunrise),
         sunset = Date(sunset)
     )
-}
-
-fun List<WeatherForecastEntity>.toWeatherForecasts(): List<WeatherForecast> {
-    return map { it.toWeatherForecast() }
 }
 
 fun CurrentWeatherNetworkModel.toCurrentWeather(city: City): CurrentWeather {

@@ -19,3 +19,8 @@ data class CityEntity(
     @ColumnInfo(name = "position")
     val position: Int,
 )
+
+data class CitiesListItemTuple(
+    val id: Long,
+    val name: String
+)

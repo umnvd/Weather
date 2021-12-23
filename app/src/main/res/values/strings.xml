@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Weather</string>
+
+    <string name="percentage_value" translatable="false">%1$d%%</string>
+    <string name="degrees_celsius_sign" translatable="false">°C</string>
+    <string name="value_in_degrees" translatable="false">%1$d°</string>
+
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="wind">Wind</string>
+    <string name="precipitation_probability">Precipitation\nprobability</string>
+    <string name="weather_icon_description">Weather icon</string>
+    <string name="morning">Morning</string>
+    <string name="day">Day</string>
+    <string name="evening">Evening</string>
+    <string name="night">Night</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="try_again_message">Something went wrong. Try again later.</string>
+    <string name="try_again">Try again</string>
 </resources>

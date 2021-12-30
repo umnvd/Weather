@@ -1,39 +1,39 @@
 package com.umnvd.weather.data
 
-import com.umnvd.weather.data.cities.CitiesListItemTuple
-import com.umnvd.weather.data.cities.CityEntity
-import com.umnvd.weather.data.network.ICON_BASE_URL
-import com.umnvd.weather.data.weather.current.CurrentWeatherNetworkModel
-import com.umnvd.weather.data.weather.forecast.DayWeatherForecastEntity
-import com.umnvd.weather.data.weather.forecast.WeatherForecastNetworkModel
-import com.umnvd.weather.model.*
+import com.umnvd.weather.data.cities.cities.CitiesListItemTuple
+import com.umnvd.weather.data.cities.cities.CityEntity
+import com.umnvd.weather.data.weather.ICON_BASE_URL
+import com.umnvd.weather.data.weather.current_weather.CurrentWeatherNetworkModel
+import com.umnvd.weather.data.weather.weather_forecast.DayWeatherForecastEntity
+import com.umnvd.weather.data.weather.weather_forecast.WeatherForecastNetworkModel
+import com.umnvd.weather.models.*
 import java.util.*
 import kotlin.math.roundToInt
 
- fun CityEntity.toCity(currentCityId: Long): City {
+ fun CityEntity.toCity(isCurrent: Boolean): City {
     return City(
         id = this.id,
         name = this.name,
         lat = this.lat,
         lon = this.lon,
-        isCurrent = this.id == currentCityId
+        isCurrent = isCurrent
     )
 }
 
-fun CitiesListItemTuple.toCitiesListItem(currentCityId: Long): CitiesListItem {
+fun CitiesListItemTuple.toCitiesListItem(isCurrent: Boolean): CitiesListItem {
     return CitiesListItem(
         id = this.id,
         name = this.name,
-        isCurrent = this.id == currentCityId
+        isCurrent = isCurrent
     )
 }
 
-fun WeatherForecastNetworkModel.toDayWeatherForecastEntities(city: City): List<DayWeatherForecastEntity> {
+fun WeatherForecastNetworkModel.toDayWeatherForecastEntities(cityId: Long): List<DayWeatherForecastEntity> {
     val currentTime = System.currentTimeMillis()
     return daily.mapIndexed { index, daily ->
         DayWeatherForecastEntity(
             updatedAt = currentTime,
-            cityId = city.id,
+            cityId = cityId,
             dayId = index.toLong() + 1,
             date = daily.date + timezoneOffset,
             iconUrl = String.format(ICON_BASE_URL, daily.weather.first().iconId),

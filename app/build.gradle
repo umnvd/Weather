@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 def apiKeyPropertiesFile = rootProject.file("apikey.properties")
@@ -47,16 +48,6 @@ android {
 }
 
 dependencies {
-    def fragment_version = "1.4.0"
-    def viewpager2_version = "1.0.0"
-    def nav_version = "2.3.5"
-    def coroutines_version = "1.5.0"
-    def dagger_version = "2.40.5"
-    def gson_version = "2.8.9"
-    def retrofit2_version = "2.9.0"
-    def datastore_version = "1.0.0"
-    def room_version = "2.4.0"
-
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "androidx.appcompat:appcompat:1.4.0"
     implementation "com.google.android.material:material:1.4.0"

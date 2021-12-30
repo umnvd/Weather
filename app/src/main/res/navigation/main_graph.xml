@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/citiesFragment">
+
+    <fragment
+        android:id="@+id/citiesFragment"
+        android:name="com.umnvd.weather.screens.cities.CitiesFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_cities" >
+        <action
+            android:id="@+id/action_citiesFragment_to_weatherForecastFragment"
+            app:destination="@id/weatherForecastFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherForecastFragment"
+        android:name="com.umnvd.weather.screens.weather_forecast.WeatherForecastFragment"
+        android:label="{cityName}"
+        tools:layout="@layout/fragment_weather_forecast" >
+        <argument
+            android:name="cityId"
+            app:argType="long" />
+        <argument
+            android:name="cityName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

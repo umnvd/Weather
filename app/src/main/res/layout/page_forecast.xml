@@ -74,7 +74,7 @@
         app:layout_constraintStart_toEndOf="@id/humidityBarrier"
         app:layout_constraintTop_toBottomOf="@id/dateTextView" />
 
-    <com.umnvd.weather.view.CircleDiagramView
+    <com.umnvd.weather.views.CircleDiagramView
         android:id="@+id/humidityCircleDiagramView"
         android:layout_width="@dimen/humidity_view_size"
         android:layout_height="@dimen/humidity_view_size"

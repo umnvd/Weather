@@ -1,5 +1,6 @@
 package com.umnvd.weather.di
 
+import com.umnvd.weather.BuildConfig
 import com.umnvd.weather.data.weather.WeatherApiService
 import dagger.Module
 import dagger.Provides
@@ -22,6 +23,7 @@ class NetworkModule {
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val url = chain.request().url().newBuilder()
+                    .addQueryParameter("appid", BuildConfig.OPEN_WEATHER_KEY)
                     .addQueryParameter("units", "metric")
                     .addQueryParameter("lang", language)
                     .build()

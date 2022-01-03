@@ -15,46 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!--    Preview    -->
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="07.12" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="08.12" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="09.12" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="10.12" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="11.12" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="12.12" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="13.12" />
-
-    </com.google.android.material.tabs.TabLayout>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/forecastPager"
@@ -64,17 +25,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/forecastTabs" />
-
-    <!--  Preview  -->
-
-    <include
-        layout="@layout/page_forecast"
-        tools:layout_width="0dp"
-        tools:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/forecastTabs"
-        tools:layout_constraintEnd_toEndOf="parent"
-        tools:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

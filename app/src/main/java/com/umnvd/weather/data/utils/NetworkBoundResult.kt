@@ -3,8 +3,6 @@ package com.umnvd.weather.data.utils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
-import java.io.IOException
-import java.lang.NullPointerException
 
 inline fun <Local, Remote> networkBoundResult(
     crossinline fetchFromLocal: suspend () -> Local,

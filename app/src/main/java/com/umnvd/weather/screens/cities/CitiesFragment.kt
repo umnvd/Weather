@@ -6,10 +6,17 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.umnvd.weather.R
 import com.umnvd.weather.appComponent
 import com.umnvd.weather.databinding.FragmentCitiesBinding
+import com.umnvd.weather.models.CitiesListItem
 import com.umnvd.weather.screens.SavedStateViewModelsFactory
+import com.umnvd.weather.screens.cities.adapters.CitiesAdapter
+import com.umnvd.weather.screens.cities.adapters.CityItemTouchCallback
 import javax.inject.Inject
 
 class CitiesFragment: Fragment(R.layout.fragment_cities) {
@@ -29,13 +36,40 @@ class CitiesFragment: Fragment(R.layout.fragment_cities) {
 
         val binding = FragmentCitiesBinding.bind(view)
 
+        val layoutManager = LinearLayoutManager(
+            requireContext(), RecyclerView.VERTICAL, false
+        )
+        val adapter = CitiesAdapter(object : CitiesAdapter.Listener {
+            override fun onCityIsCurrentClick(cityItem: CitiesListItem) {
+                viewModel.changeCurrentCity(cityItem)
+            }
 
+            override fun onCityItemClick(cityItem: CitiesListItem) {
+                showWeatherForecast(cityItem)
+            }
+
+            override fun onCityItemMove(fromPosition: Int, toPosition: Int) {
+                viewModel.moveCity(fromPosition, toPosition)
+            }
+        })
+        val touchHelper = ItemTouchHelper(CityItemTouchCallback(adapter))
+        val dividerDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+
+        with(binding.citiesRecycler) {
+            this.layoutManager = layoutManager
+            this.adapter = adapter
+            touchHelper.attachToRecyclerView(this)
+            addItemDecoration(dividerDecoration)
+            setHasFixedSize(true)
+        }
+
+        viewModel.liveCities.observe(viewLifecycleOwner, adapter::setCities)
 
     }
 
-    private fun testNavigate() {
+    private fun showWeatherForecast(cityItem: CitiesListItem) {
         val destination = CitiesFragmentDirections
-            .actionCitiesFragmentToWeatherForecastFragment(111, "Test test")
+            .actionCitiesFragmentToWeatherForecastFragment(cityItem.id, cityItem.name)
 
         findNavController().navigate(destination)
     }

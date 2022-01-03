@@ -3,6 +3,7 @@ package com.umnvd.weather.data.cities
 import com.umnvd.weather.data.cities.cities.CitiesDao
 import com.umnvd.weather.data.cities.cities.CitiesListItemTuple
 import com.umnvd.weather.data.cities.current_city.CurrentCityStore
+import com.umnvd.weather.data.cities.current_city.CurrentCityStore.Companion.NO_CURRENT_CITY_ID
 import com.umnvd.weather.data.toCitiesListItem
 import com.umnvd.weather.data.toCity
 import com.umnvd.weather.di.IO
@@ -34,8 +35,9 @@ class CitiesRepositoryImpl @Inject constructor(
         }
 
     override suspend fun changeCurrentCity(id: Long) = withContext(ioDispatcher) {
-        val newId = if (currentCityStore.getCurrentCityId().last() == id) {
-            CurrentCityStore.NO_CURRENT_CITY_ID
+        val currentId = currentCityStore.getCurrentCityId().first()
+        val newId = if (currentId == id) {
+            NO_CURRENT_CITY_ID
         } else {
             id
         }

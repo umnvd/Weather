@@ -7,14 +7,15 @@ import com.umnvd.weather.di.DaggerAppComponent
 
 class WeatherApp : Application() {
 
-    lateinit var appComponent: AppComponent
-        private set
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent
+            .factory()
+            .create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.builder()
-            .context(context = this)
-            .build()
+        appComponent.inject(this)
     }
 
 }

@@ -10,7 +10,7 @@ import com.umnvd.weather.models.*
 import java.util.*
 import kotlin.math.roundToInt
 
- fun CityEntity.toCity(isCurrent: Boolean): City {
+fun CityEntity.toCity(isCurrent: Boolean): City {
     return City(
         id = this.id,
         name = this.name,
@@ -35,9 +35,12 @@ fun WeatherForecastNetworkModel.toDayWeatherForecastEntities(cityId: Long): List
             updatedAt = currentTime,
             cityId = cityId,
             dayId = index.toLong() + 1,
-            date = daily.date + timezoneOffset,
+            date = (daily.date + timezoneOffset) * 1000,
             iconUrl = String.format(ICON_BASE_URL, daily.weather.first().iconId),
-            description = daily.weather.first().description,
+            description = daily.weather.first().description.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault())
+                else it.toString()
+            },
             humidity = daily.humidity.toInt(),
             pressure = daily.pressure.toInt(),
             windSpeed = daily.windSpeed.roundToInt(),
@@ -47,8 +50,8 @@ fun WeatherForecastNetworkModel.toDayWeatherForecastEntities(cityId: Long): List
             dayTemp = daily.temp.day.roundToInt(),
             eveningTemp = daily.temp.evening.roundToInt(),
             nightTemp = daily.temp.night.roundToInt(),
-            sunrise = daily.sunrise,
-            sunset = daily.sunset
+            sunrise = (daily.sunrise + timezoneOffset) * 1000,
+            sunset = (daily.sunset + timezoneOffset) * 1000,
         )
     }
 }

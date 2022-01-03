@@ -2,6 +2,9 @@
 <resources>
     <string name="app_name">Погода</string>
 
+    <string name="value_in_mm_hg">%1$d мм рт. ст.</string>
+    <string name="value_in_mps_with_dir">%1$d м/с, %2$s</string>
+
     <string name="humidity">Влажность</string>
     <string name="pressure">Давление</string>
     <string name="wind">Ветер</string>

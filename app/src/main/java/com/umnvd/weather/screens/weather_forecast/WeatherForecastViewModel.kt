@@ -1,5 +1,6 @@
 package com.umnvd.weather.screens.weather_forecast
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -46,9 +48,9 @@ class WeatherForecastViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
-            weatherForecastRepository.getWeatherForecast(
-                citiesRepository.getCity(args.cityId).last()
-            ).collect {
+            val city = citiesRepository.getCity(args.cityId).first()
+
+            weatherForecastRepository.getWeatherForecast(city).collect {
                 processResult(it)
             }
 
@@ -82,6 +84,10 @@ class WeatherForecastViewModel @AssistedInject constructor(
         }
 
         val resultData = result.data ?: return
+        Log.d("Weather", resultData.toString())
+
+        Log.d("Weather", resultData.firstOrNull()?.date?.time.toString())
+        Log.d("Weather", System.currentTimeMillis().toString())
         _forecast.postValue(resultData)
     }
 

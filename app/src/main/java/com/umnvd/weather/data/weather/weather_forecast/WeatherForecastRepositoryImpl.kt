@@ -1,5 +1,6 @@
 package com.umnvd.weather.data.weather.weather_forecast
 
+import android.util.Log
 import com.umnvd.weather.data.toDayWeatherForecast
 import com.umnvd.weather.data.toDayWeatherForecastEntities
 import com.umnvd.weather.data.utils.*

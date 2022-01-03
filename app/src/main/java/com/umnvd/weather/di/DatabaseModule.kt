@@ -2,9 +2,10 @@ package com.umnvd.weather.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.umnvd.weather.data.AppDatabase
 import com.umnvd.weather.data.cities.cities.CitiesDao
-import com.umnvd.weather.data.cities.utils.CitiesPrePopulationCallback
 import com.umnvd.weather.data.weather.weather_forecast.WeatherForecastDao
 import dagger.Module
 import dagger.Provides
@@ -23,7 +24,12 @@ class DatabaseModule {
             AppDatabase::class.java,
             "weather.db"
         )
-            .addCallback(CitiesPrePopulationCallback(context, databaseInstance))
+            .addCallback(object : RoomDatabase.Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    AppDatabase.onCreate(databaseInstance, context)
+                }
+            })
             .build()
         return databaseInstance
     }

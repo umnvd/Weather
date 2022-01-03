@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Weather</string>
 
-    <string name="percentage_value" translatable="false">%1$d%%</string>
     <string name="degrees_celsius_sign" translatable="false">°C</string>
     <string name="value_in_degrees" translatable="false">%1$d°</string>
+    <string name="percentage_value" translatable="false">%1$d%%</string>
+
+    <string name="value_in_mm_hg">%1$d mm Hg</string>
+    <string name="value_in_mps_with_dir">%1$d m/s, %2$s</string>
 
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>

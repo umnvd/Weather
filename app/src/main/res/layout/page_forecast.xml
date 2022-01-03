@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
     android:paddingHorizontal="@dimen/padding_medium"
     android:paddingBottom="@dimen/padding_medium">
 
@@ -57,14 +56,14 @@
         android:id="@+id/weatherIconImageView"
         android:layout_width="@dimen/weather_icon_size"
         android:layout_height="@dimen/weather_icon_size"
-        tools:src="@drawable/ic_sample_weather"
+        tools:src="@drawable/ic_weather"
         android:contentDescription="@string/weather_icon_description"
         app:layout_constraintBottom_toBottomOf="@id/weatherDescriptionTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/weatherDescriptionTextView" />
 
     <TextView
-        android:id="@+id/humidityTextView"
+        android:id="@+id/humidityTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
@@ -83,7 +82,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/humidityBarrier"
-        app:layout_constraintTop_toBottomOf="@id/humidityTextView"
+        app:layout_constraintTop_toBottomOf="@id/humidityTitleTextView"
         tools:value="55" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -91,7 +90,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="start"
-        app:constraint_referenced_ids="humidityTextView, humidityCircleDiagramView" />
+        app:constraint_referenced_ids="humidityTitleTextView, humidityCircleDiagramView" />
 
 
     <androidx.constraintlayout.widget.Barrier
@@ -161,7 +160,7 @@
         tools:text="6 m/s, SE" />
 
     <TextView
-        android:id="@+id/precipitationProbTextView"
+        android:id="@+id/precipitation_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
@@ -184,12 +183,12 @@
         android:text="@string/morning"
         android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintEnd_toStartOf="@id/mornDayGuideLine"
-        app:layout_constraintBottom_toTopOf="@id/mornMaxTempTextView"
+        app:layout_constraintBottom_toTopOf="@id/morn_temp_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/testGl" />
 
     <TextView
-        android:id="@+id/mornMaxTempTextView"
+        android:id="@+id/morn_temp_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
@@ -216,13 +215,13 @@
         app:layout_constraintTop_toTopOf="@id/mornTempTitleTextView" />
 
     <TextView
-        android:id="@+id/dayMaxTempTextView"
+        android:id="@+id/day_temp_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toStartOf="@id/dayEveGuideLine"
         app:layout_constraintStart_toEndOf="@id/mornDayGuideLine"
-        app:layout_constraintTop_toTopOf="@id/mornMaxTempTextView"
+        app:layout_constraintTop_toTopOf="@id/morn_temp_text_view"
         tools:text="12°" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -242,13 +241,13 @@
         app:layout_constraintTop_toTopOf="@id/dayTempTitleTextView" />
 
     <TextView
-        android:id="@+id/eveMaxTempTextView"
+        android:id="@+id/eve_temp_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toStartOf="@id/eveNightGuideLine"
         app:layout_constraintStart_toEndOf="@id/dayEveGuideLine"
-        app:layout_constraintTop_toTopOf="@id/dayMaxTempTextView"
+        app:layout_constraintTop_toTopOf="@id/day_temp_text_view"
         tools:text="10°" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -268,13 +267,13 @@
         app:layout_constraintTop_toTopOf="@id/eveTempTitleTextView" />
 
     <TextView
-        android:id="@+id/nightMaxTempTextView"
+        android:id="@+id/night_temp_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/eveNightGuideLine"
-        app:layout_constraintTop_toTopOf="@id/eveMaxTempTextView"
+        app:layout_constraintTop_toTopOf="@id/eve_temp_text_view"
         tools:text="5°" />
 
     <TextView

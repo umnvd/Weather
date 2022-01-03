@@ -15,7 +15,7 @@ class CircleDiagramView(
     defStyleRes: Int
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    var diagramValue: Int = 0
+    var value: Int = 0
         set(value) {
             field = min(max(value, MIN_VALUE), MAX_VALUE)
             invalidate()
@@ -49,10 +49,6 @@ class CircleDiagramView(
     init {
         initAttributes(attrs, defStyleAttr, defStyleRes)
         initPaints()
-
-        if (isInEditMode) {
-            diagramValue = 55
-        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -84,10 +80,12 @@ class CircleDiagramView(
     }
 
     override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
         val centerX = diagramBounds.centerX()
         val centerY = diagramBounds.centerY()
 
-        val filledEndAngle = getFilledEndAngle(diagramValue)
+        val filledEndAngle = getFilledEndAngle(value)
         val blankStartAngle = START_ANGLE + filledEndAngle
         val blankEndAngle = MAX_ANGLE - filledEndAngle
 
@@ -96,7 +94,7 @@ class CircleDiagramView(
         canvas.drawPath(clipCircle, clipPaint)
 
         val textCenterY = centerY + textBounds.height() / 2
-        canvas.drawText(getValueWithPercent(diagramValue), centerX, textCenterY, textPaint)
+        canvas.drawText(getValueWithPercent(value), centerX, textCenterY, textPaint)
     }
 
     private fun initAttributes(attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
@@ -104,7 +102,7 @@ class CircleDiagramView(
             attrs, R.styleable.CircleDiagramView, defStyleAttr, defStyleRes
         )
 
-        diagramValue = typedArray.getInt(R.styleable.CircleDiagramView_value, MIN_VALUE)
+        value = typedArray.getInt(R.styleable.CircleDiagramView_value, MIN_VALUE)
         filledColor = typedArray.getColor(R.styleable.CircleDiagramView_filledColor, DEFAULT_FILLED_COLOR)
         blankColor = typedArray.getColor(R.styleable.CircleDiagramView_blankColor, DEFAULT_BLANK_COLOR)
         textColor = typedArray.getColor(R.styleable.CircleDiagramView_textColor, DEFAULT_TEXT_COLOR)

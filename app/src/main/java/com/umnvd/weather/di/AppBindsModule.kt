@@ -16,14 +16,14 @@ import dagger.Module
 interface AppBindsModule {
 
     @Binds
-    fun bindCitiesRepositoryImpl_to_CitiesRepository(
-        citiesRepositoryImpl: CitiesRepositoryImpl
-    ): CitiesRepository
-
-    @Binds
     fun bindCurrentCityStoreImpl_to_CurrentCityStore(
         currentCityStoreImpl: CurrentCityStoreImpl
     ): CurrentCityStore
+
+    @Binds
+    fun bindCitiesRepositoryImpl_to_CitiesRepository(
+        citiesRepositoryImpl: CitiesRepositoryImpl
+    ): CitiesRepository
 
     @Binds
     fun bindWeatherForecastRepositoryImpl_to_WeatherForecastRepository(

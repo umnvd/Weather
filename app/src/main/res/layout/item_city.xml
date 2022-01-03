@@ -25,11 +25,12 @@
         android:id="@+id/itemCityIsCurrentImageView"
         android:layout_width="@dimen/current_city_icon_size"
         android:layout_height="@dimen/current_city_icon_size"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_current_city_active"
+        android:background="?selectableItemBackgroundBorderless"
         tools:visibility="visible"
         android:contentDescription="@string/current_city_description"
         />

@@ -14,8 +14,8 @@ interface AssistedViewModelFactory<T : ViewModel> {
 }
 
 class SavedStateViewModelsFactory @Inject constructor(
-    private val viewModelProviders: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>,
-    private val assistedFactories: Map<Class<out ViewModel>, @JvmSuppressWildcards AssistedViewModelFactory<out ViewModel>>
+    private val assistedFactories: Map<Class<out ViewModel>, @JvmSuppressWildcards AssistedViewModelFactory<out ViewModel>>,
+    private val viewModelProviders: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) {
 
     fun create(
@@ -25,27 +25,19 @@ class SavedStateViewModelsFactory @Inject constructor(
         return object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
             @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel?> create(
+            override fun <T : ViewModel> create(
                 key: String,
                 modelClass: Class<T>,
                 handle: SavedStateHandle
             ): T {
-                val viewModel = createViewModel(modelClass)
-                    ?: createAssistedViewModel(modelClass, handle)
+                val viewModel = createAssistedViewModel(modelClass, handle)
+                    ?: createViewModel(modelClass)
                     ?: throw IllegalArgumentException("Unknown viewModel class $modelClass")
 
                 return viewModel as T
             }
 
         }
-    }
-
-    private fun <T : ViewModel?> createViewModel(modelClass: Class<T>): ViewModel? {
-        val creator = viewModelProviders[modelClass]
-            ?: viewModelProviders.asIterable().firstOrNull { modelClass.isAssignableFrom(it.key) }?.value
-            ?: return null
-
-        return creator.get()
     }
 
     private fun <T : ViewModel?> createAssistedViewModel(
@@ -57,6 +49,14 @@ class SavedStateViewModelsFactory @Inject constructor(
             ?: return null
 
         return creator.create(handle)
+    }
+
+    private fun <T : ViewModel?> createViewModel(modelClass: Class<T>): ViewModel? {
+        val creator = viewModelProviders[modelClass]
+            ?: viewModelProviders.asIterable().firstOrNull { modelClass.isAssignableFrom(it.key) }?.value
+            ?: return null
+
+        return creator.get()
     }
 
 }

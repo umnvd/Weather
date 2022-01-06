@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umnvd.weather.data.cities.CitiesRepository
 import com.umnvd.weather.models.CitiesListItem
-import kotlinx.coroutines.flow.collect
+import com.umnvd.weather.utils.share
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class CitiesViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _liveCities: MutableLiveData<List<CitiesListItem>> = MutableLiveData()
-    val liveCities: LiveData<List<CitiesListItem>> get() = _liveCities
+    val liveCities = _liveCities.share()
 
     init {
         viewModelScope.launch {

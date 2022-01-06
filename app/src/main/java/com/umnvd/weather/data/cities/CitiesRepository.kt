@@ -9,11 +9,13 @@ interface CitiesRepository {
 
     fun getCities(): Flow<List<CitiesListItem>>
 
-    fun getCity(id: Long): Flow<City>
-
     suspend fun moveCity(fromPosition: Int, toPosition: Int)
 
+    fun isCityCurrent(cityId: Long): Flow<Boolean>
+
     suspend fun changeCurrentCity(id: Long)
+
+    suspend fun getCity(id: Long): City
 
     suspend fun getCurrentCity(): City
 

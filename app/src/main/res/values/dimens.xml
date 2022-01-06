@@ -12,7 +12,7 @@
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
 
-    <dimen name="weather_icon_size">50dp</dimen>
+    <dimen name="weather_icon_size">75dp</dimen>
     <dimen name="humidity_view_size">100dp</dimen>
     <dimen name="current_city_icon_size">32dp</dimen>
     <dimen name="humidity_arc_width">15dp</dimen>

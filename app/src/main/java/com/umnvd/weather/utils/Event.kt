@@ -19,7 +19,7 @@ typealias LiveEvent<T> = LiveData<Event<T>>
 typealias EventListener<T> = (T) -> Unit
 
 fun <T> MutableLiveEvent<T>.publishEvent(value: T) {
-    this.postValue(Event(value))
+    this.value = Event(value)
 }
 
 fun <T> LiveEvent<T>.observeEvent(lifecycleOwner: LifecycleOwner, listener: EventListener<T>) {

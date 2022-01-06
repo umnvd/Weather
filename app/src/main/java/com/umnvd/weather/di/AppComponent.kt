@@ -1,7 +1,6 @@
 package com.umnvd.weather.di
 
 import android.app.Application
-import android.content.Context
 import com.umnvd.weather.WeatherApp
 import com.umnvd.weather.screens.cities.CitiesFragment
 import com.umnvd.weather.screens.weather_forecast.WeatherForecastFragment

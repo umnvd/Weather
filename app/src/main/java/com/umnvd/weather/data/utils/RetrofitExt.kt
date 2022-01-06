@@ -1,5 +1,6 @@
 package com.umnvd.weather.data.utils
 
+import com.umnvd.weather.data.WeatherApiException
 import retrofit2.Response
 
 fun <T> Response<T>.takeResult(): FinalResult<T> {
@@ -7,12 +8,12 @@ fun <T> Response<T>.takeResult(): FinalResult<T> {
         val body = this.body()
 
         if (body == null || this.code() == 204) {
-            ErrorResult("Empty body")
+            ErrorResult(WeatherApiException())
         } else {
             SuccessResult(body)
         }
 
     } else {
-        ErrorResult(this.message() ?: "Unknown error")
+        ErrorResult(WeatherApiException())
     }
 }

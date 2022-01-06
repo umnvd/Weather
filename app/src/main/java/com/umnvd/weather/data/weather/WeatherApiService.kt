@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val ICON_BASE_URL = "http://openweathermap.org/img/wn/%s@2x.png"
+const val ICON_BASE_URL = "https://openweathermap.org/img/wn/%s@2x.png"
 
 interface WeatherApiService {
 

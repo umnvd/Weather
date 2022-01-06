@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="Theme.Weather.Day.V27" parent="Theme.Weather">
+
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+    </style>
+
+    <style name="Theme.Weather.Main" parent="Theme.Weather.Day.V27" />
+
+</resources>

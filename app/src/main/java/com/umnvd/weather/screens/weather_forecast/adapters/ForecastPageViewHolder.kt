@@ -2,6 +2,7 @@ package com.umnvd.weather.screens.weather_forecast.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.umnvd.weather.R
 import com.umnvd.weather.databinding.PageForecastBinding
 import com.umnvd.weather.models.DayWeatherForecast
@@ -41,13 +42,15 @@ class ForecastPageViewHolder(
 
             sunriseTextView.text = timeFormat.format(forecast.sunrise)
             sunsetTextView.text = timeFormat.format(forecast.sunset)
-        }
 
-        Glide.with(binding.root.context)
-            .load(forecast.iconUrl)
-            .placeholder(R.drawable.ic_downloading_placeholder)
-            .error(R.drawable.ic_weather)
-            .into(binding.weatherIconImageView)
+            Glide.with(weatherIconImageView.context)
+                .load(forecast.iconUrl)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .fitCenter()
+                .placeholder(R.drawable.weather_placeholder)
+                .error(R.drawable.weather_placeholder)
+                .into(weatherIconImageView)
+        }
     }
 
 }

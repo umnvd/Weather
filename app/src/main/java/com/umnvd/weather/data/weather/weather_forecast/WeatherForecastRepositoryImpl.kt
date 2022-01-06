@@ -1,11 +1,11 @@
 package com.umnvd.weather.data.weather.weather_forecast
 
-import android.util.Log
 import com.umnvd.weather.data.toDayWeatherForecast
 import com.umnvd.weather.data.toDayWeatherForecastEntities
-import com.umnvd.weather.data.utils.*
+import com.umnvd.weather.data.utils.Result
+import com.umnvd.weather.data.utils.networkBoundResult
 import com.umnvd.weather.data.weather.WeatherApiService
-import com.umnvd.weather.di.IO
+import com.umnvd.weather.di.InputOutput
 import com.umnvd.weather.models.City
 import com.umnvd.weather.models.DayWeatherForecast
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class WeatherForecastRepositoryImpl @Inject constructor(
     private val weatherForecastDao: WeatherForecastDao,
     private val weatherApiService: WeatherApiService,
-    @IO private val ioDispatcher: CoroutineDispatcher
+    @InputOutput private val ioDispatcher: CoroutineDispatcher
 ) : WeatherForecastRepository {
 
     override fun getWeatherForecast(city: City): Flow<Result<List<DayWeatherForecast>>> =

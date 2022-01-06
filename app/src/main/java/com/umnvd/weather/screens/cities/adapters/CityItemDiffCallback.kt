@@ -3,14 +3,20 @@ package com.umnvd.weather.screens.cities.adapters
 import androidx.recyclerview.widget.DiffUtil
 import com.umnvd.weather.models.CitiesListItem
 
-class CityItemDiffCallback : DiffUtil.ItemCallback<CitiesListItem>() {
+class CityItemDiffCallback(
+    private val oldCities: List<CitiesListItem>,
+    private val newCities: List<CitiesListItem>
+) : DiffUtil.Callback() {
 
-    override fun areItemsTheSame(oldItem: CitiesListItem, newItem: CitiesListItem): Boolean {
-        return oldItem.id == newItem.id
+    override fun getOldListSize(): Int = oldCities.size
+
+    override fun getNewListSize(): Int = newCities.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldCities[oldItemPosition].id == newCities[newItemPosition].id
     }
 
-    override fun areContentsTheSame(oldItem: CitiesListItem, newItem: CitiesListItem): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldCities[oldItemPosition] == newCities[newItemPosition]
     }
-
 }

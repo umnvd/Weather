@@ -14,7 +14,7 @@
     <attr name="circleDiagramStyle" format="reference" />
 
     <style name="CircleDiagramDefaultStyle">
-        <item name="filledColor">?android:attr/colorAccent</item>
+        <item name="filledColor">?android:attr/colorPrimary</item>
         <item name="blankColor">#888888</item>
         <item name="textColor">?android:attr/textColorPrimary</item>
         <item name="clipColor">?android:attr/colorBackground</item>

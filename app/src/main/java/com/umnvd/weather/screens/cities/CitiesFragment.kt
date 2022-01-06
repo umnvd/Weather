@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -23,8 +24,9 @@ class CitiesFragment: Fragment(R.layout.fragment_cities) {
 
     @Inject
     lateinit var factory: SavedStateViewModelsFactory
-
-    private val viewModel: CitiesViewModel by viewModels { factory.create(this) }
+    private val viewModel: CitiesViewModel by viewModels {
+        factory.create(this)
+    }
 
     override fun onAttach(context: Context) {
         context.appComponent.inject(this)
@@ -33,7 +35,6 @@ class CitiesFragment: Fragment(R.layout.fragment_cities) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val binding = FragmentCitiesBinding.bind(view)
 
         val layoutManager = LinearLayoutManager(
@@ -64,14 +65,21 @@ class CitiesFragment: Fragment(R.layout.fragment_cities) {
         }
 
         viewModel.liveCities.observe(viewLifecycleOwner, adapter::setCities)
-
     }
 
     private fun showWeatherForecast(cityItem: CitiesListItem) {
         val destination = CitiesFragmentDirections
             .actionCitiesFragmentToWeatherForecastFragment(cityItem.id, cityItem.name)
 
-        findNavController().navigate(destination)
+        findNavController().navigate(
+            destination,
+            NavOptions.Builder()
+                .setEnterAnim(R.anim.enter)
+                .setPopEnterAnim(R.anim.pop_enter)
+                .setExitAnim(R.anim.exit)
+                .setPopExitAnim(R.anim.pop_exit)
+                .build()
+        )
     }
 
 }

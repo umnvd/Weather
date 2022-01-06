@@ -53,8 +53,4 @@ data class DayWeatherForecastEntity(
     val sunset: Long,
     @ColumnInfo(name = "updated_at")
     val updatedAt: Long
-) {
-
-
-
-}
+)

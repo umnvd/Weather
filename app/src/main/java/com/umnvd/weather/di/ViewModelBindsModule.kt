@@ -7,9 +7,17 @@ import com.umnvd.weather.screens.weather_forecast.WeatherForecastViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import dagger.multibindings.Multibinds
 
 @Module
 interface ViewModelBindsModule {
+
+    @Multibinds
+    fun viewModels(): Map<Class<out ViewModel>, @JvmSuppressWildcards ViewModel>
+
+    @Multibinds
+    fun assistedFactories(): Map<Class<out ViewModel>,
+            @JvmSuppressWildcards AssistedViewModelFactory<out ViewModel>>
 
     @Binds
     @[IntoMap ViewModelKey(CitiesViewModel::class)]

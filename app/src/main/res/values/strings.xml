@@ -2,7 +2,7 @@
     <string name="app_name">Weather</string>
 
     <string name="degrees_celsius_sign" translatable="false">°C</string>
-    <string name="value_in_degrees" translatable="false">%1$d°</string>
+    <string name="value_in_degrees" translatable="false">%1$d°C</string>
     <string name="percentage_value" translatable="false">%1$d%%</string>
 
     <string name="value_in_mm_hg">%1$d mm Hg</string>
@@ -12,7 +12,6 @@
     <string name="pressure">Pressure</string>
     <string name="wind">Wind</string>
     <string name="precipitation_probability">Precipitation\nprobability</string>
-    <string name="weather_icon_description">Weather icon</string>
     <string name="morning">Morning</string>
     <string name="day">Day</string>
     <string name="evening">Evening</string>
@@ -20,10 +19,21 @@
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
     <string name="try_again_message">Something went wrong. Try again later.</string>
-    <string name="try_again">Try again</string>
     <string name="set_as_current">Set as current</string>
-    <string name="set_as_current_description">Set as current city</string>
     <string name="share">Share</string>
+
+    <string name="weather_icon_description">Weather icon</string>
+    <string name="set_as_current_description">Set as current city</string>
     <string name="share_description">Share weather forecast</string>
-    <string name="current_city_description">City is current</string>
+    <string name="current_city_description">Change current city</string>
+    <string name="weather_forecast_tabs_description">Weather forecast tabs</string>
+
+    <string name="network_error">Can\'t load forecast. Check the internet connection and try again</string>
+    <string name="api_error">Can\'t load remote data</string>
+    <string name="updating">Updating</string>
+    <string name="storage_error">Can\'t load local data</string>
+    <string name="try_again">Try again</string>
+    <string name="updated">Forecast is up to date</string>
+    <string name="share_error">Can\'t share forecast</string>
+
 </resources>

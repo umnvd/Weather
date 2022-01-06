@@ -1,6 +1,5 @@
 package com.umnvd.weather.screens.weather_forecast.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,9 +15,9 @@ class WeatherForecastAdapter: RecyclerView.Adapter<ForecastPageViewHolder>() {
 
     fun setWeatherForecast(newForecast: List<DayWeatherForecast>) {
         val callback = WeatherForecastDiffCallback(forecast, newForecast)
-        val diff = DiffUtil.calculateDiff(callback)
-        diff.dispatchUpdatesTo(this)
+        val diff = DiffUtil.calculateDiff(callback, false)
         this.forecast = newForecast.toMutableList()
+        diff.dispatchUpdatesTo(this)
     }
 
     fun getPageTitle(position: Int): String {

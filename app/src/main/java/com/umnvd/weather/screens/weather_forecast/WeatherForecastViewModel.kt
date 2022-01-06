@@ -1,63 +1,50 @@
 package com.umnvd.weather.screens.weather_forecast
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.umnvd.weather.R
+import com.umnvd.weather.data.InternetConnectionException
+import com.umnvd.weather.data.StorageException
+import com.umnvd.weather.data.WeatherApiException
+import com.umnvd.weather.data.WeatherAppException
 import com.umnvd.weather.data.cities.CitiesRepository
 import com.umnvd.weather.data.utils.ErrorResult
 import com.umnvd.weather.data.utils.PendingResult
 import com.umnvd.weather.data.utils.Result
+import com.umnvd.weather.data.utils.SuccessResult
 import com.umnvd.weather.data.weather.weather_forecast.WeatherForecastRepository
-import com.umnvd.weather.models.City
 import com.umnvd.weather.models.DayWeatherForecast
 import com.umnvd.weather.screens.AssistedViewModelFactory
-import com.umnvd.weather.utils.Event
-import com.umnvd.weather.utils.MutableLiveEvent
-import com.umnvd.weather.utils.publishEvent
-import com.umnvd.weather.utils.share
+import com.umnvd.weather.utils.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WeatherForecastViewModel @AssistedInject constructor(
     @Assisted handle: SavedStateHandle,
     private val citiesRepository: CitiesRepository,
     private val weatherForecastRepository: WeatherForecastRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val args = WeatherForecastFragmentArgs.fromSavedStateHandle(handle)
 
-    private val _city = MutableLiveData<City>()
-    val liveCity= _city.share()
+    private val _isCityCurrent = MutableLiveData(false)
+    val isCityCurrent = _isCityCurrent.share()
 
-    private val _forecast = MutableLiveData<List<DayWeatherForecast>>()
-    val liveForecast = _forecast.share()
+    private val _weatherForecast = MutableLiveData<List<DayWeatherForecast>>()
+    val weatherForecast = _weatherForecast.share()
 
-    private val _errorMessage = MutableLiveEvent<String>()
-    val errorMessage = _errorMessage.share()
-
-    private val _showProgress = MutableLiveEvent(Event(false))
-    val showProgress = _showProgress.share()
+    private val _messageEvents = MutableLiveEvent<MessageConfig>()
+    val messageEvent = _messageEvents.share()
 
     init {
-        viewModelScope.launch {
-            val city = citiesRepository.getCity(args.cityId).first()
-
-            weatherForecastRepository.getWeatherForecast(city).collect {
-                processResult(it)
-            }
-
-            citiesRepository.getCity(args.cityId).collect {
-                _city.postValue(it)
-            }
-        }
+        loadWeatherForecast()
     }
 
     fun changeCurrentCity() {
@@ -66,33 +53,72 @@ class WeatherForecastViewModel @AssistedInject constructor(
         }
     }
 
-    fun getWeatherForecastText(): String {
-        val city = _city.value ?: return ""
-        val forecast = _forecast.value ?: return ""
-        return "CityName "
+    fun getWeatherForecastText(): String? {
+        val forecast = _weatherForecast.value
+        if (forecast.isNullOrEmpty()) return null
+        return prepareForecastText(args.cityName, forecast)
+    }
+
+    private fun loadWeatherForecast() {
+        viewModelScope.launch {
+            val city = citiesRepository.getCity(args.cityId)
+            weatherForecastRepository.getWeatherForecast(city).collect(::processResult)
+            citiesRepository.isCityCurrent(args.cityId).collect(_isCityCurrent::setValue)
+        }
+    }
+
+    private fun prepareForecastText(cityName: String, forecast: List<DayWeatherForecast>): String {
+        val dateFormat = SimpleDateFormat("dd.MM", Locale.getDefault())
+        val forecastTextBuilder = StringBuilder().appendLine(cityName)
+        forecast.forEach {
+            forecastTextBuilder.appendLine(
+                "${dateFormat.format(it.date)} - ${it.description}, ${it.dayTemp}°C"
+            )
+        }
+        return forecastTextBuilder.toString()
     }
 
     private fun processResult(result: Result<List<DayWeatherForecast>>) {
-        if (result is PendingResult) {
-            _showProgress.publishEvent(true)
-        } else {
-            _showProgress.publishEvent(false)
+        when (result) {
+            is PendingResult -> onPending()
+            is ErrorResult -> onError(result.error)
+            is SuccessResult -> onSuccess()
         }
+        result.data?.let { _weatherForecast.value = it }
+    }
 
-        if (result is ErrorResult) {
-            _errorMessage.publishEvent(result.message)
+    private fun onPending() {
+        _messageEvents.publishEvent(
+            MessageConfig(
+                message = R.string.updating,
+                isInfinite = true
+            )
+        )
+    }
+
+    private fun onError(error: WeatherAppException) {
+        val message = when (error) {
+            is StorageException -> R.string.storage_error
+            is InternetConnectionException -> R.string.network_error
+            is WeatherApiException -> R.string.api_error
         }
+        _messageEvents.publishEvent(
+            MessageConfig(
+                message = message,
+                actionConfig = ActionConfig(
+                    title = R.string.try_again,
+                    action = ::loadWeatherForecast
+                )
+            )
+        )
+    }
 
-        val resultData = result.data ?: return
-        Log.d("Weather", resultData.toString())
-
-        Log.d("Weather", resultData.firstOrNull()?.date?.time.toString())
-        Log.d("Weather", System.currentTimeMillis().toString())
-        _forecast.postValue(resultData)
+    private fun onSuccess() {
+        _messageEvents.publishEvent(MessageConfig(message = R.string.updated))
     }
 
     @AssistedFactory
-    interface Factory: AssistedViewModelFactory<WeatherForecastViewModel> {
+    interface Factory : AssistedViewModelFactory<WeatherForecastViewModel> {
         override fun create(handle: SavedStateHandle): WeatherForecastViewModel
     }
 

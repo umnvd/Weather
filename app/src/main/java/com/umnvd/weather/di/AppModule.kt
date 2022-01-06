@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
         DatabaseModule::class,
         NetworkModule::class,
         ViewModelBindsModule::class,
-        UiModule::class
     ]
 )
 class AppModule {
@@ -22,11 +21,11 @@ class AppModule {
     fun provideContext(application: Application): Context = application.applicationContext
 
     @Provides
-    @IO
+    @InputOutput
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
-    @Default
+    @Computation
     fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
 }

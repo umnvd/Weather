@@ -7,11 +7,11 @@ import kotlin.reflect.KClass
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class IO
+annotation class InputOutput
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Default
+annotation class Computation
 
 @MapKey
 @Target(AnnotationTarget.FUNCTION)

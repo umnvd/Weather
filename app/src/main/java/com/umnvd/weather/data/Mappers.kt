@@ -10,13 +10,12 @@ import com.umnvd.weather.models.*
 import java.util.*
 import kotlin.math.roundToInt
 
-fun CityEntity.toCity(isCurrent: Boolean): City {
+fun CityEntity.toCity(): City {
     return City(
         id = this.id,
         name = this.name,
         lat = this.lat,
         lon = this.lon,
-        isCurrent = isCurrent
     )
 }
 

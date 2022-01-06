@@ -2,21 +2,28 @@ package com.umnvd.weather.screens.cities.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.umnvd.weather.databinding.ItemCityBinding
 import com.umnvd.weather.models.CitiesListItem
 import java.util.*
 
 class CitiesAdapter(
     private val listener: Listener
-) : ListAdapter<CitiesListItem, CityItemViewHolder>(CityItemDiffCallback()),
+) : RecyclerView.Adapter<CityItemViewHolder>(),
     CityItemTouchCallback.Listener {
 
     private var cities: MutableList<CitiesListItem> = mutableListOf()
 
-    fun setCities(cities: List<CitiesListItem>) {
-        this.cities = cities.toMutableList()
-        submitList(cities)
+    fun setCities(newCities: List<CitiesListItem>) {
+        val callback = CityItemDiffCallback(cities, newCities)
+        val diff = DiffUtil.calculateDiff(callback, false)
+        cities = newCities.toMutableList()
+        diff.dispatchUpdatesTo(this)
+    }
+
+    override fun getItemCount(): Int {
+        return cities.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityItemViewHolder {
@@ -26,10 +33,10 @@ class CitiesAdapter(
 
         with(binding) {
             root.setOnClickListener {
-                listener.onCityItemClick(getItem(viewHolder.adapterPosition))
+                listener.onCityItemClick(cities[viewHolder.adapterPosition])
             }
             itemCityIsCurrentImageView.setOnClickListener {
-                listener.onCityIsCurrentClick(getItem(viewHolder.adapterPosition))
+                listener.onCityIsCurrentClick(cities[viewHolder.adapterPosition])
             }
         }
 
@@ -37,7 +44,7 @@ class CitiesAdapter(
     }
 
     override fun onBindViewHolder(holder: CityItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(cities[position])
     }
 
     override fun onDrag(fromPosition: Int, toPosition: Int): Boolean {

@@ -4,6 +4,8 @@ import com.umnvd.weather.data.cities.CitiesRepository
 import com.umnvd.weather.data.cities.CitiesRepositoryImpl
 import com.umnvd.weather.data.cities.current_city.CurrentCityStore
 import com.umnvd.weather.data.cities.current_city.CurrentCityStoreImpl
+import com.umnvd.weather.data.weather.current_weather.CurrentWeatherNotifications
+import com.umnvd.weather.data.weather.current_weather.CurrentWeatherNotificationsImpl
 import com.umnvd.weather.data.weather.current_weather.CurrentWeatherRepository
 import com.umnvd.weather.data.weather.current_weather.CurrentWeatherRepositoryImpl
 import com.umnvd.weather.data.weather.weather_forecast.WeatherForecastRepository
@@ -34,4 +36,9 @@ interface AppBindsModule {
     fun bindCurrentWeatherRepositoryImpl_to_CurrentWeatherRepository(
         currentWeatherRepositoryImpl: CurrentWeatherRepositoryImpl
     ): CurrentWeatherRepository
+
+    @Binds
+    fun bindCurrentWeatherNotificationsImpl_to_CurrentWeatherNotifications(
+        currentWeatherNotificationsImpl: CurrentWeatherNotificationsImpl
+    ): CurrentWeatherNotifications
 }

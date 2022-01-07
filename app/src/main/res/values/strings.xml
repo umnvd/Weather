@@ -37,4 +37,7 @@
     <string name="share_error">Can\'t share forecast</string>
     <string name="current_city_error">No current city</string>
 
+    <string name="current_weather_channel">Current weather</string>
+    <string name="current_weather_channel_description">Show current weather</string>
+
 </resources>

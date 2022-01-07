@@ -35,7 +35,7 @@ fun WeatherForecastNetworkModel.toDayWeatherForecastEntities(cityId: Long): List
             cityId = cityId,
             dayId = index.toLong() + 1,
             date = (daily.date + timezoneOffset) * 1000,
-            iconUrl = String.format(ICON_BASE_URL, daily.weather.first().iconId),
+            iconUrl = String.format(ICON_BASE_URL, daily.weather[0].iconId),
             description = daily.weather.first().description.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault())
                 else it.toString()
@@ -77,6 +77,7 @@ fun DayWeatherForecastEntity.toDayWeatherForecast(): DayWeatherForecast {
 fun CurrentWeatherNetworkModel.toCurrentWeather(cityName: String): CurrentWeather {
     return CurrentWeather(
         cityName = cityName,
-        temp = tempData.temp.roundToInt()
+        iconUrl = String.format(ICON_BASE_URL, weather[0].iconId),
+        temp = temp.temp.roundToInt()
     )
 }

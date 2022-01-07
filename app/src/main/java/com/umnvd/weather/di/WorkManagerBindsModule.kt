@@ -1,7 +1,7 @@
 package com.umnvd.weather.di
 
 import androidx.work.ListenableWorker
-import com.umnvd.weather.data.weather.current_weather.CurrentWeatherWorker
+import com.umnvd.weather.background.CurrentWeatherWorker
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

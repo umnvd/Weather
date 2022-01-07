@@ -29,4 +29,6 @@
     <string name="updated">Обновлено</string>
     <string name="share_error">Невозможно поделиться прогнозом</string>
     <string name="current_city_error">Текущий город не установлен</string>
+    <string name="current_weather_channel">Текущая погода</string>
+    <string name="current_weather_channel_description">Показывать текущую погоду</string>
 </resources>

@@ -2,9 +2,10 @@ package com.umnvd.weather
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.work.Configuration
 import androidx.work.DelegatingWorkerFactory
+import androidx.work.WorkManager
+import com.umnvd.weather.background.CurrentWeatherWorker
 import com.umnvd.weather.di.AppComponent
 import com.umnvd.weather.di.CustomWorkersFactory
 import com.umnvd.weather.di.DaggerAppComponent
@@ -24,8 +25,7 @@ class WeatherApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         appComponent.inject(this)
-
-
+        enqueueCurrentWeatherWork()
     }
 
     override fun getWorkManagerConfiguration(): Configuration {
@@ -36,6 +36,21 @@ class WeatherApp : Application(), Configuration.Provider {
                 }
             )
             .build()
+    }
+
+    private fun enqueueCurrentWeatherWork() {
+        WorkManager.getInstance(this)
+            .cancelUniqueWork(CurrentWeatherWorker.UNIQUE_WORK_NAME)
+
+//        WorkManager.getInstance(this)
+//            .enqueueUniquePeriodicWork(
+//                CurrentWeatherWorker.UNIQUE_WORK_NAME,
+//                ExistingPeriodicWorkPolicy.KEEP,
+//                CurrentWeatherWorker.buildRequest()
+//            )
+
+        WorkManager.getInstance(this)
+            .enqueue(CurrentWeatherWorker.testRequest())
     }
 
 }

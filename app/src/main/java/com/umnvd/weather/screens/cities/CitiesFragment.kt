@@ -1,10 +1,7 @@
 package com.umnvd.weather.screens.cities
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,34 +9,26 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.umnvd.weather.R
-import com.umnvd.weather.appComponent
 import com.umnvd.weather.databinding.FragmentCitiesBinding
+import com.umnvd.weather.di.AppComponent
 import com.umnvd.weather.models.CitiesListItem
-import com.umnvd.weather.screens.SavedStateViewModelsFactory
+import com.umnvd.weather.screens.BaseFragment
 import com.umnvd.weather.screens.cities.adapters.CitiesAdapter
 import com.umnvd.weather.screens.cities.adapters.CityItemTouchCallback
-import javax.inject.Inject
+import com.umnvd.weather.screens.savedStateViewModels
 
-class CitiesFragment: Fragment(R.layout.fragment_cities) {
+class CitiesFragment: BaseFragment(R.layout.fragment_cities) {
 
-    @Inject
-    lateinit var factory: SavedStateViewModelsFactory
-    private val viewModel: CitiesViewModel by viewModels {
-        factory.create(this)
-    }
+    private val viewModel: CitiesViewModel by savedStateViewModels()
 
-    override fun onAttach(context: Context) {
-        context.appComponent.inject(this)
-        super.onAttach(context)
+    override fun inject(appComponent: AppComponent) {
+        appComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentCitiesBinding.bind(view)
 
-        val layoutManager = LinearLayoutManager(
-            requireContext(), RecyclerView.VERTICAL, false
-        )
         val adapter = CitiesAdapter(object : CitiesAdapter.Listener {
             override fun onCityIsCurrentClick(cityItem: CitiesListItem) {
                 viewModel.changeCurrentCity(cityItem)
@@ -53,14 +42,14 @@ class CitiesFragment: Fragment(R.layout.fragment_cities) {
                 viewModel.moveCity(fromPosition, toPosition)
             }
         })
-        val touchHelper = ItemTouchHelper(CityItemTouchCallback(adapter))
-        val dividerDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
 
         with(binding.citiesRecycler) {
-            this.layoutManager = layoutManager
+            this.layoutManager = LinearLayoutManager(
+                requireContext(), RecyclerView.VERTICAL, false
+            )
             this.adapter = adapter
-            touchHelper.attachToRecyclerView(this)
-            addItemDecoration(dividerDecoration)
+            ItemTouchHelper(CityItemTouchCallback(adapter)).attachToRecyclerView(this)
+            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
             setHasFixedSize(true)
         }
 

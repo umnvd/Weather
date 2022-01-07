@@ -74,10 +74,9 @@ fun DayWeatherForecastEntity.toDayWeatherForecast(): DayWeatherForecast {
     )
 }
 
-fun CurrentWeatherNetworkModel.toCurrentWeather(city: City): CurrentWeather {
+fun CurrentWeatherNetworkModel.toCurrentWeather(cityName: String): CurrentWeather {
     return CurrentWeather(
-        updateTime = Date(System.currentTimeMillis()),
-        city = city,
-        temp = this.temp.temp.roundToInt()
+        cityName = cityName,
+        temp = tempData.temp.roundToInt()
     )
 }

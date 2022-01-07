@@ -5,9 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umnvd.weather.R
-import com.umnvd.weather.data.InternetConnectionException
-import com.umnvd.weather.data.StorageException
-import com.umnvd.weather.data.WeatherApiException
 import com.umnvd.weather.data.WeatherAppException
 import com.umnvd.weather.data.cities.CitiesRepository
 import com.umnvd.weather.data.utils.ErrorResult
@@ -15,14 +12,13 @@ import com.umnvd.weather.data.utils.PendingResult
 import com.umnvd.weather.data.utils.Result
 import com.umnvd.weather.data.utils.SuccessResult
 import com.umnvd.weather.data.weather.weather_forecast.WeatherForecastRepository
+import com.umnvd.weather.di.AssistedViewModelFactory
 import com.umnvd.weather.models.DayWeatherForecast
-import com.umnvd.weather.screens.AssistedViewModelFactory
 import com.umnvd.weather.utils.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,6 +29,9 @@ class WeatherForecastViewModel @AssistedInject constructor(
 ) : ViewModel() {
 
     private val args = WeatherForecastFragmentArgs.fromSavedStateHandle(handle)
+
+    private val _currentPage = handle.getLiveData("PAGE_KEY", 0)
+    val currentPage = _currentPage.share()
 
     private val _isCityCurrent = MutableLiveData(false)
     val isCityCurrent = _isCityCurrent.share()
@@ -57,6 +56,12 @@ class WeatherForecastViewModel @AssistedInject constructor(
         val forecast = _weatherForecast.value
         if (forecast.isNullOrEmpty()) return null
         return prepareForecastText(args.cityName, forecast)
+    }
+
+    fun updateCurrentPage(page: Int) {
+        if (_currentPage.value != page) {
+            _currentPage.value = page
+        }
     }
 
     private fun loadWeatherForecast() {
@@ -97,14 +102,9 @@ class WeatherForecastViewModel @AssistedInject constructor(
     }
 
     private fun onError(error: WeatherAppException) {
-        val message = when (error) {
-            is StorageException -> R.string.storage_error
-            is InternetConnectionException -> R.string.network_error
-            is WeatherApiException -> R.string.api_error
-        }
         _messageEvents.publishEvent(
             MessageConfig(
-                message = message,
+                message = error.messageId,
                 actionConfig = ActionConfig(
                     title = R.string.try_again,
                     action = ::loadWeatherForecast
@@ -119,7 +119,9 @@ class WeatherForecastViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory : AssistedViewModelFactory<WeatherForecastViewModel> {
+
         override fun create(handle: SavedStateHandle): WeatherForecastViewModel
+
     }
 
 }

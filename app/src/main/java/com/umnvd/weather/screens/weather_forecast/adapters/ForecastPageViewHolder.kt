@@ -13,44 +13,42 @@ class ForecastPageViewHolder(
     private val binding: PageForecastBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(forecast: DayWeatherForecast) {
+    fun bind(forecast: DayWeatherForecast) = with(binding) {
+        Glide.with(weatherIconImageView.context)
+            .load(forecast.iconUrl)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .fitCenter()
+            .placeholder(R.drawable.weather_placeholder)
+            .error(R.drawable.weather_placeholder)
+            .into(weatherIconImageView)
+
         val dateFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-        with(binding) {
-            dateTextView.text = dateFormat.format(forecast.date)
+        dateTextView.text = dateFormat.format(forecast.date)
 
-            tempTextView.text = forecast.dayTemp.toString()
-            weatherDescriptionTextView.text = forecast.description
-            humidityCircleDiagramView.value = forecast.humidity
+        tempTextView.text = forecast.dayTemp.toString()
+        weatherDescriptionTextView.text = forecast.description
+        humidityCircleDiagramView.value = forecast.humidity
 
-            pressureTextView.text = root.context
-                .getString(R.string.value_in_mm_hg, forecast.pressure)
-            windTextView.text = root.context
-                .getString(R.string.value_in_mps_with_dir, forecast.windSpeed, forecast.windDir.name)
-            precipitationTextView.text = root.context
-                .getString(R.string.percentage_value, forecast.precipitationProb)
+        pressureTextView.text = root.context
+            .getString(R.string.value_in_mm_hg, forecast.pressure)
+        windTextView.text = root.context
+            .getString(R.string.value_in_mps_with_dir, forecast.windSpeed, forecast.windDir.name)
+        precipitationTextView.text = root.context
+            .getString(R.string.percentage_value, forecast.precipitationProb)
 
-            mornTempTextView.text = root.context
-                .getString(R.string.value_in_degrees, forecast.morningTemp)
-            dayTempTextView.text = root.context
-                .getString(R.string.value_in_degrees, forecast.dayTemp)
-            eveTempTextView.text = root.context
-                .getString(R.string.value_in_degrees, forecast.eveningTemp)
-            nightTempTextView.text = root.context
-                .getString(R.string.value_in_degrees, forecast.nightTemp)
+        mornTempTextView.text = root.context
+            .getString(R.string.value_in_degrees, forecast.morningTemp)
+        dayTempTextView.text = root.context
+            .getString(R.string.value_in_degrees, forecast.dayTemp)
+        eveTempTextView.text = root.context
+            .getString(R.string.value_in_degrees, forecast.eveningTemp)
+        nightTempTextView.text = root.context
+            .getString(R.string.value_in_degrees, forecast.nightTemp)
 
-            sunriseTextView.text = timeFormat.format(forecast.sunrise)
-            sunsetTextView.text = timeFormat.format(forecast.sunset)
-
-            Glide.with(weatherIconImageView.context)
-                .load(forecast.iconUrl)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .fitCenter()
-                .placeholder(R.drawable.weather_placeholder)
-                .error(R.drawable.weather_placeholder)
-                .into(weatherIconImageView)
-        }
+        sunriseTextView.text = timeFormat.format(forecast.sunrise)
+        sunsetTextView.text = timeFormat.format(forecast.sunset)
     }
 
 }

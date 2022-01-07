@@ -1,4 +1,4 @@
-package com.umnvd.weather.screens
+package com.umnvd.weather.di
 
 import android.os.Bundle
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
@@ -14,8 +14,10 @@ interface AssistedViewModelFactory<T : ViewModel> {
 }
 
 class SavedStateViewModelsFactory @Inject constructor(
-    private val assistedFactories: Map<Class<out ViewModel>, @JvmSuppressWildcards AssistedViewModelFactory<out ViewModel>>,
-    private val viewModelProviders: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+    private val assistedFactories: Map<Class<out ViewModel>,
+            @JvmSuppressWildcards AssistedViewModelFactory<out ViewModel>>,
+    private val viewModelProviders: Map<Class<out ViewModel>,
+            @JvmSuppressWildcards Provider<ViewModel>>
 ) {
 
     fun create(
@@ -45,7 +47,10 @@ class SavedStateViewModelsFactory @Inject constructor(
         handle: SavedStateHandle
     ): ViewModel? {
         val creator = assistedFactories[modelClass]
-            ?: assistedFactories.asIterable().firstOrNull { modelClass.isAssignableFrom(it.key) }?.value
+            ?: assistedFactories
+                .asIterable()
+                .firstOrNull { modelClass.isAssignableFrom(it.key) }
+                ?.value
             ?: return null
 
         return creator.create(handle)
@@ -53,7 +58,10 @@ class SavedStateViewModelsFactory @Inject constructor(
 
     private fun <T : ViewModel?> createViewModel(modelClass: Class<T>): ViewModel? {
         val creator = viewModelProviders[modelClass]
-            ?: viewModelProviders.asIterable().firstOrNull { modelClass.isAssignableFrom(it.key) }?.value
+            ?: viewModelProviders
+                .asIterable()
+                .firstOrNull { modelClass.isAssignableFrom(it.key) }
+                ?.value
             ?: return null
 
         return creator.get()

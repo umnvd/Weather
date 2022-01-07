@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
         DatabaseModule::class,
         NetworkModule::class,
         ViewModelBindsModule::class,
+        WorkManagerBindsModule::class
     ]
 )
 class AppModule {

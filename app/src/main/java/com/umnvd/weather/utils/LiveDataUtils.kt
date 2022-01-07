@@ -4,6 +4,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
+typealias MutableLiveEvent<T> = MutableLiveData<Event<T>>
+typealias LiveEvent<T> = LiveData<Event<T>>
+typealias EventListener<T> = (T) -> Unit
+
 class Event<T>(
     value: T
 ) {
@@ -14,9 +18,7 @@ class Event<T>(
 
 }
 
-typealias MutableLiveEvent<T> = MutableLiveData<Event<T>>
-typealias LiveEvent<T> = LiveData<Event<T>>
-typealias EventListener<T> = (T) -> Unit
+fun <T> MutableLiveData<T>.share(): LiveData<T> = this
 
 fun <T> MutableLiveEvent<T>.publishEvent(value: T) {
     this.value = Event(value)

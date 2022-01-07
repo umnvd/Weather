@@ -9,6 +9,7 @@
     tools:context="com.umnvd.weather.screens.cities.CitiesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/grey_A10"
         android:id="@+id/citiesRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

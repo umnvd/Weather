@@ -9,10 +9,9 @@ class CityItemViewHolder(
     private val binding: ItemCityBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(cityItem: CitiesListItem) {
-        binding.itemCityNameTextView.text = cityItem.name
-
-        binding.itemCityIsCurrentImageView.setImageResource(
+    fun bind(cityItem: CitiesListItem) = with(binding) {
+        itemCityNameTextView.text = cityItem.name
+        itemCityIsCurrentImageView.setImageResource(
             if (cityItem.isCurrent) {
                 R.drawable.ic_current_city_active
             } else {

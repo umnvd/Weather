@@ -131,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/windTitleTextView"
         app:layout_constraintBottom_toTopOf="@id/mornTempTextView"
-        android:layout_marginBottom="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_large"
         />
 
     <androidx.constraintlayout.widget.Barrier

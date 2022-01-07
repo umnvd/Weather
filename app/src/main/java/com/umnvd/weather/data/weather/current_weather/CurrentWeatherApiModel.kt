@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class CurrentWeatherNetworkModel(
     @SerializedName("main")
-    val temp: CurrentTemp,
+    val tempData: TempData,
 )
-data class CurrentTemp(
+data class TempData(
     @SerializedName("temp")
     val temp: Double
 )

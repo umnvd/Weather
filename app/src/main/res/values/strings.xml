@@ -28,12 +28,13 @@
     <string name="current_city_description">Change current city</string>
     <string name="weather_forecast_tabs_description">Weather forecast tabs</string>
 
-    <string name="network_error">Can\'t load forecast. Check the internet connection and try again</string>
-    <string name="api_error">Can\'t load remote data</string>
+    <string name="internet_connection_error">Can\'t load forecast. Check the internet connection and try again</string>
+    <string name="weather_api_error">Can\'t load remote data</string>
     <string name="updating">Updating</string>
     <string name="storage_error">Can\'t load local data</string>
     <string name="try_again">Try again</string>
     <string name="updated">Forecast is up to date</string>
     <string name="share_error">Can\'t share forecast</string>
+    <string name="current_city_error">No current city</string>
 
 </resources>

@@ -27,8 +27,8 @@ class CityItemTouchCallback(
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        toPosition = target.adapterPosition
-        return listener.onDrag(viewHolder.adapterPosition, target.adapterPosition)
+        toPosition = target.bindingAdapterPosition
+        return listener.onDrag(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
@@ -36,7 +36,7 @@ class CityItemTouchCallback(
 
         when (actionState) {
             ItemTouchHelper.ACTION_STATE_DRAG -> {
-                fromPosition = viewHolder?.adapterPosition ?: -1
+                fromPosition = viewHolder?.bindingAdapterPosition ?: -1
             }
             ItemTouchHelper.ACTION_STATE_IDLE -> {
                 if (fromPosition == toPosition) return

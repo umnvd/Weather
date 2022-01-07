@@ -15,6 +15,10 @@ class CitiesAdapter(
 
     private var cities: MutableList<CitiesListItem> = mutableListOf()
 
+    init {
+        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
+
     fun setCities(newCities: List<CitiesListItem>) {
         val callback = CityItemDiffCallback(cities, newCities)
         val diff = DiffUtil.calculateDiff(callback, false)
@@ -33,10 +37,10 @@ class CitiesAdapter(
 
         with(binding) {
             root.setOnClickListener {
-                listener.onCityItemClick(cities[viewHolder.adapterPosition])
+                listener.onCityItemClick(cities[viewHolder.bindingAdapterPosition])
             }
             itemCityIsCurrentImageView.setOnClickListener {
-                listener.onCityIsCurrentClick(cities[viewHolder.adapterPosition])
+                listener.onCityIsCurrentClick(cities[viewHolder.bindingAdapterPosition])
             }
         }
 

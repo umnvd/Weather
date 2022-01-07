@@ -17,4 +17,9 @@
         <item name="tabTextAppearance">@style/TextAppearance.Weather.Tab</item>
     </style>
 
+    <style name="Widget.Weather.CircleDiagram" parent="CircleDiagramDefaultStyle">
+        <item name="filledColor">@color/peach</item>
+        <item name="blankColor">@color/peach_A25</item>
+    </style>
+
 </resources>

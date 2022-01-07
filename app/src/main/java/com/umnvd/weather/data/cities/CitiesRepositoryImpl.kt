@@ -1,6 +1,7 @@
 package com.umnvd.weather.data.cities
 
 import android.database.sqlite.SQLiteException
+import com.umnvd.weather.data.NoCurrentCityException
 import com.umnvd.weather.data.StorageException
 import com.umnvd.weather.data.cities.cities.CitiesDao
 import com.umnvd.weather.data.cities.cities.CitiesListItemTuple
@@ -61,7 +62,7 @@ class CitiesRepositoryImpl @Inject constructor(
         return@withContext try {
             citiesDao.getCityById(currentCityId).toCity()
         } catch (e: SQLiteException) {
-            throw StorageException().apply { initCause(e) }
+            throw NoCurrentCityException().apply { initCause(e) }
         }
     }
 }

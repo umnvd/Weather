@@ -13,6 +13,7 @@
         <item name="android:navigationBarColor">@color/grey_dark</item>
 
         <item name="android:textViewStyle">@style/Widget.Weather.TextView</item>
+        <item name="circleDiagramStyle">@style/Widget.Weather.CircleDiagram</item>
 
     </style>
 

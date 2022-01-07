@@ -22,10 +22,11 @@
     <string name="share_description">Поделиться прогнозом погоды</string>
     <string name="current_city_description">Текущий город</string>
     <string name="weather_forecast_tabs_description">Вкладки прогноза погоды</string>
-    <string name="network_error">Невозможно загрузить прогноз. Проверьте подключение к интернету и повторите попытку</string>
-    <string name="api_error">Ошибка загрузки данных из сети</string>
+    <string name="internet_connection_error">Невозможно загрузить прогноз. Проверьте подключение к интернету и повторите попытку</string>
+    <string name="weather_api_error">Ошибка загрузки данных из сети</string>
     <string name="storage_error">Ошибка загрузки локальных данных</string>
     <string name="updating">Обновление</string>
     <string name="updated">Обновлено</string>
     <string name="share_error">Невозможно поделиться прогнозом</string>
+    <string name="current_city_error">Текущий город не установлен</string>
 </resources>

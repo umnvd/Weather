@@ -6,6 +6,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.umnvd.weather.data.AppDatabase
 import com.umnvd.weather.data.cities.cities.CitiesDao
+import com.umnvd.weather.data.cities.cities.CitiesPrepopulator
+import com.umnvd.weather.data.cities.cities.CitiesUtilDao
 import com.umnvd.weather.data.weather.weather_forecast.WeatherForecastDao
 import dagger.Module
 import dagger.Provides
@@ -14,12 +16,12 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
 
-    private lateinit var databaseInstance: AppDatabase
+    private lateinit var appDatabase: AppDatabase
 
     @Provides
     @Singleton
     fun provideAppDatabase(context: Context): AppDatabase {
-        databaseInstance = Room.databaseBuilder(
+        appDatabase = Room.databaseBuilder(
             context,
             AppDatabase::class.java,
             "weather.db"
@@ -27,11 +29,11 @@ class DatabaseModule {
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    AppDatabase.onCreate(databaseInstance, context)
+                    CitiesPrepopulator().prepopulate(appDatabase, context)
                 }
             })
             .build()
-        return databaseInstance
+        return appDatabase
     }
 
     @Provides
@@ -42,6 +44,11 @@ class DatabaseModule {
     @Provides
     fun provideWeatherForecastDao(appDatabase: AppDatabase): WeatherForecastDao {
         return appDatabase.weatherForecastDao
+    }
+
+    @Provides
+    fun provideCitiesUtilDao(appDatabase: AppDatabase): CitiesUtilDao {
+        return appDatabase.citiesUtilDao
     }
 
 }

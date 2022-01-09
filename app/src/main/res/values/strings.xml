@@ -5,8 +5,8 @@
     <string name="value_in_degrees" translatable="false">%1$d°C</string>
     <string name="percentage_value" translatable="false">%1$d%%</string>
 
-    <string name="value_in_mm_hg">%1$d mm Hg</string>
-    <string name="value_in_mps_with_dir">%1$d m/s, %2$s</string>
+    <string name="pressure_in_mm_hg">%1$d mm Hg</string>
+    <string name="wind_in_mps">%1$d m/s, </string>
 
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
@@ -29,15 +29,25 @@
     <string name="weather_forecast_tabs_description">Weather forecast tabs</string>
 
     <string name="internet_connection_error">Can\'t load forecast. Check the internet connection and try again</string>
-    <string name="weather_api_error">Can\'t load remote data</string>
+    <string name="network_error">Can\'t load remote data</string>
     <string name="updating">Updating</string>
     <string name="storage_error">Can\'t load local data</string>
     <string name="try_again">Try again</string>
     <string name="updated">Forecast is up to date</string>
     <string name="share_error">Can\'t share forecast</string>
     <string name="current_city_error">No current city</string>
+    <string name="error">Error</string>
 
     <string name="current_weather_channel">Current weather</string>
     <string name="current_weather_channel_description">Show current weather</string>
+
+    <string name="direction_n">N</string>
+    <string name="direction_ne">NE</string>
+    <string name="direction_e">E</string>
+    <string name="direction_se">SE</string>
+    <string name="direction_s">S</string>
+    <string name="direction_sw">SW</string>
+    <string name="direction_w">W</string>
+    <string name="direction_nw">NW</string>
 
 </resources>

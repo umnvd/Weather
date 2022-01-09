@@ -1,21 +1,18 @@
 package com.umnvd.weather.data.cities.cities
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CitiesDao {
 
-    @Query("SELECT id, name FROM cities ORDER BY position ASC")
-    fun getCities(): Flow<List<CitiesListItemTuple>>
+    @Query("SELECT * FROM city_view WHERE language = :language ORDER BY position")
+    fun getCitiesListItemTuples(language: String): Flow<List<CityDbView>>
 
-    @Query("SELECT * FROM cities WHERE id = :id")
-    suspend fun getCityById(id: Long): CityEntity
+    @Query("SELECT * FROM city_view WHERE id = :id AND language = :language")
+    suspend fun getCityTupleById(id: Long, language: String): CityDbView
 
-    @Query("UPDATE cities SET position = :newPosition WHERE position = :oldPosition")
+    @Query("UPDATE city_data SET position = :newPosition WHERE position = :oldPosition")
     suspend fun updateCityPosition(oldPosition: Int, newPosition: Int)
 
     @Transaction
@@ -32,8 +29,5 @@ interface CitiesDao {
         }
         updateCityPosition(-1, toPosition)
     }
-
-    @Insert
-    suspend fun insertCities(cities: List<CityEntity>)
 
 }

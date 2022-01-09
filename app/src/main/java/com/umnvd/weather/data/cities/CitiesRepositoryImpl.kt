@@ -2,9 +2,8 @@ package com.umnvd.weather.data.cities
 
 import android.database.sqlite.SQLiteException
 import com.umnvd.weather.data.NoCurrentCityException
-import com.umnvd.weather.data.StorageException
 import com.umnvd.weather.data.cities.cities.CitiesDao
-import com.umnvd.weather.data.cities.cities.CitiesListItemTuple
+import com.umnvd.weather.data.cities.cities.CityDbView
 import com.umnvd.weather.data.cities.current_city.CurrentCityStore
 import com.umnvd.weather.data.cities.current_city.CurrentCityStore.Companion.NO_CURRENT_CITY_ID
 import com.umnvd.weather.data.toCitiesListItem
@@ -15,6 +14,7 @@ import com.umnvd.weather.models.City
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class CitiesRepositoryImpl @Inject constructor(
@@ -23,11 +23,14 @@ class CitiesRepositoryImpl @Inject constructor(
     @InputOutput private val ioDispatcher: CoroutineDispatcher
 ) : CitiesRepository {
 
+    private val language: String
+        get() = Locale.getDefault().language
+
     override fun getCities(): Flow<List<CitiesListItem>> = combine(
-        citiesDao.getCities(),
+        citiesDao.getCitiesListItemTuples(language),
         currentCityStore.getCurrentCityId()
-    ) { cityEntities: List<CitiesListItemTuple>, currentCityId: Long ->
-        cityEntities.map { cityTuple ->
+    ) { cities: List<CityDbView>, currentCityId: Long ->
+        cities.map { cityTuple ->
             cityTuple.toCitiesListItem(cityTuple.id == currentCityId)
         }
     }.flowOn(ioDispatcher)
@@ -54,15 +57,16 @@ class CitiesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCity(id: Long): City = withContext(ioDispatcher) {
-        return@withContext citiesDao.getCityById(id).toCity()
+        return@withContext citiesDao.getCityTupleById(id, language).toCity()
     }
 
     override suspend fun getCurrentCity(): City = withContext(ioDispatcher) {
         val currentCityId = currentCityStore.getCurrentCityId().first()
         return@withContext try {
-            citiesDao.getCityById(currentCityId).toCity()
+            citiesDao.getCityTupleById(currentCityId, language).toCity()
         } catch (e: SQLiteException) {
             throw NoCurrentCityException().apply { initCause(e) }
         }
     }
+
 }

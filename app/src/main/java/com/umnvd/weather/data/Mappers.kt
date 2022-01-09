@@ -1,7 +1,6 @@
 package com.umnvd.weather.data
 
-import com.umnvd.weather.data.cities.cities.CitiesListItemTuple
-import com.umnvd.weather.data.cities.cities.CityEntity
+import com.umnvd.weather.data.cities.cities.CityDbView
 import com.umnvd.weather.data.weather.ICON_BASE_URL
 import com.umnvd.weather.data.weather.current_weather.CurrentWeatherNetworkModel
 import com.umnvd.weather.data.weather.weather_forecast.DayWeatherForecastEntity
@@ -10,7 +9,7 @@ import com.umnvd.weather.models.*
 import java.util.*
 import kotlin.math.roundToInt
 
-fun CityEntity.toCity(): City {
+fun CityDbView.toCity(): City {
     return City(
         id = this.id,
         name = this.name,
@@ -19,7 +18,7 @@ fun CityEntity.toCity(): City {
     )
 }
 
-fun CitiesListItemTuple.toCitiesListItem(isCurrent: Boolean): CitiesListItem {
+fun CityDbView.toCitiesListItem(isCurrent: Boolean): CitiesListItem {
     return CitiesListItem(
         id = this.id,
         name = this.name,

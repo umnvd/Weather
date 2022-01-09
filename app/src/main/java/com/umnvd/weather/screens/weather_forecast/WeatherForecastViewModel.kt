@@ -5,6 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umnvd.weather.R
+import com.umnvd.weather.data.InternetConnectionException
+import com.umnvd.weather.data.NetworkException
+import com.umnvd.weather.data.StorageException
 import com.umnvd.weather.data.WeatherAppException
 import com.umnvd.weather.data.cities.CitiesRepository
 import com.umnvd.weather.data.utils.ErrorResult
@@ -102,9 +105,16 @@ class WeatherForecastViewModel @AssistedInject constructor(
     }
 
     private fun onError(error: WeatherAppException) {
+        val messageId = when (error) {
+            is StorageException -> R.string.storage_error
+            is InternetConnectionException -> R.string.internet_connection_error
+            is NetworkException -> R.string.network_error
+            else -> R.string.error
+        }
+
         _messageEvents.publishEvent(
             MessageConfig(
-                message = error.messageId,
+                message = messageId,
                 actionConfig = ActionConfig(
                     title = R.string.try_again,
                     action = ::loadWeatherForecast

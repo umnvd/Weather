@@ -1,6 +1,7 @@
 package com.umnvd.weather.data.utils
 
-import com.umnvd.weather.data.WeatherApiException
+import android.util.Log
+import com.umnvd.weather.data.NetworkException
 import retrofit2.Response
 
 fun <T> Response<T>.takeResult(): FinalResult<T> {
@@ -8,12 +9,13 @@ fun <T> Response<T>.takeResult(): FinalResult<T> {
         val body = this.body()
 
         if (body == null || this.code() == 204) {
-            ErrorResult(WeatherApiException())
+            ErrorResult(NetworkException())
         } else {
             SuccessResult(body)
         }
 
     } else {
-        ErrorResult(WeatherApiException())
+        Log.d("Utils", "Error: ${this.code()}")
+        ErrorResult(NetworkException())
     }
 }

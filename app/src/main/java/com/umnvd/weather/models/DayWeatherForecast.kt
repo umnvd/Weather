@@ -1,5 +1,7 @@
 package com.umnvd.weather.models
 
+import androidx.annotation.StringRes
+import com.umnvd.weather.R
 import java.util.*
 
 data class DayWeatherForecast(
@@ -19,11 +21,18 @@ data class DayWeatherForecast(
     val sunset: Date,
 )
 
-enum class WindDirection(val degreeRange: IntRange) {
-    N(0..25), NE(25 until 65),
-    E(65 until 115), SE(115 until 155),
-    S(155 until 205), SW(205 until 245),
-    W(245 until 295), NW(295 until 335),
+enum class WindDirection(
+    val degreeRange: IntRange,
+    @StringRes val nameId: Int
+) {
+    N(0..25, R.string.direction_n),
+    NE(25 until 65, R.string.direction_ne),
+    E(65 until 115, R.string.direction_e),
+    SE(115 until 155, R.string.direction_se),
+    S(155 until 205, R.string.direction_s),
+    SW(205 until 245, R.string.direction_sw),
+    W(245 until 295, R.string.direction_w),
+    NW(295 until 335, R.string.direction_nw),
 }
 
 fun Int.toWindDirection(): WindDirection {

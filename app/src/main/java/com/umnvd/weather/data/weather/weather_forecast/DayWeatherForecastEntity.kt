@@ -3,14 +3,14 @@ package com.umnvd.weather.data.weather.weather_forecast
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.umnvd.weather.data.cities.cities.CityEntity
+import com.umnvd.weather.data.cities.cities.CityDataEntity
 
 @Entity(
     tableName = "weather_forecasts",
     primaryKeys = ["city_id", "day_id"],
     foreignKeys = [
         ForeignKey(
-            entity = CityEntity::class,
+            entity = CityDataEntity::class,
             parentColumns = ["id"],
             childColumns = ["city_id"],
             onDelete = ForeignKey.CASCADE,

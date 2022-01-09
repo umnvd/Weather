@@ -54,16 +54,10 @@ class CurrentWeatherWorker @AssistedInject constructor(
                 .build()
 
             return PeriodicWorkRequestBuilder<CurrentWeatherWorker>(
-                REPEAT, TimeUnit.MINUTES,
+                15, TimeUnit.MINUTES,
                 FLEX, TimeUnit.MINUTES
             )
                 .setConstraints(constraints)
-                .build()
-        }
-
-        fun testRequest(): OneTimeWorkRequest {
-            return OneTimeWorkRequest.Builder(CurrentWeatherWorker::class.java)
-                .setInitialDelay(5, TimeUnit.SECONDS)
                 .build()
         }
 

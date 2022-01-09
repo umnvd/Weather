@@ -32,9 +32,9 @@ class ForecastPageViewHolder(
         humidityCircleDiagramView.value = forecast.humidity
 
         pressureTextView.text = root.context
-            .getString(R.string.value_in_mm_hg, forecast.pressure)
-        windTextView.text = root.context
-            .getString(R.string.value_in_mps_with_dir, forecast.windSpeed, forecast.windDir.name)
+            .getString(R.string.pressure_in_mm_hg, forecast.pressure)
+        windTextView.text = root.context.getString(R.string.wind_in_mps, forecast.windSpeed)
+        windDirTextView.setText(forecast.windDir.nameId)
         precipitationTextView.text = root.context
             .getString(R.string.percentage_value, forecast.precipitationProb)
 

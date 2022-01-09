@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.work.Configuration
 import androidx.work.DelegatingWorkerFactory
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import com.umnvd.weather.background.CurrentWeatherWorker
 import com.umnvd.weather.di.AppComponent
@@ -40,17 +41,11 @@ class WeatherApp : Application(), Configuration.Provider {
 
     private fun enqueueCurrentWeatherWork() {
         WorkManager.getInstance(this)
-            .cancelUniqueWork(CurrentWeatherWorker.UNIQUE_WORK_NAME)
-
-//        WorkManager.getInstance(this)
-//            .enqueueUniquePeriodicWork(
-//                CurrentWeatherWorker.UNIQUE_WORK_NAME,
-//                ExistingPeriodicWorkPolicy.KEEP,
-//                CurrentWeatherWorker.buildRequest()
-//            )
-
-        WorkManager.getInstance(this)
-            .enqueue(CurrentWeatherWorker.testRequest())
+            .enqueueUniquePeriodicWork(
+                CurrentWeatherWorker.UNIQUE_WORK_NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
+                CurrentWeatherWorker.buildRequest()
+            )
     }
 
 }

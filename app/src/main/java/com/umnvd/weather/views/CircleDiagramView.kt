@@ -8,11 +8,11 @@ import android.view.View
 import com.umnvd.weather.R
 import kotlin.math.*
 
-class CircleDiagramView(
+class CircleDiagramView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int,
-    defStyleRes: Int
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.circleDiagramStyle,
+    defStyleRes: Int = R.style.CircleDiagramDefaultStyle,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
     var value: Int = 0
@@ -37,14 +37,6 @@ class CircleDiagramView(
     private val diagramBounds = RectF()
     private val clipCircle = Path()
     private val textBounds = Rect()
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
-            : this(context, attrs, defStyleAttr, R.style.CircleDiagramDefaultStyle)
-
-    constructor(context: Context, attrs: AttributeSet?)
-            : this(context, attrs, R.attr.circleDiagramStyle)
-
-    constructor(context: Context) : this(context, null)
 
     init {
         initAttributes(attrs, defStyleAttr, defStyleRes)
@@ -155,8 +147,8 @@ class CircleDiagramView(
     }
 
     private fun updateArcWidth() {
-        val arcMinWidth = diagramBounds.width() * 0.05f
-        val arcMaxWidth = diagramBounds.width() * 0.2f
+        val arcMinWidth = diagramBounds.width() * ARC_MIN_WIDTH_FACTOR
+        val arcMaxWidth = diagramBounds.width() * ARC_MAX_WIDTH_FACTOR
 
         arcWidth = if (arcWidth == AUTO_SIZE_VALUE) {
             arcMaxWidth
@@ -175,22 +167,20 @@ class CircleDiagramView(
     }
 
     private fun updateTextSize() {
-        val textMinWidth = (diagramBounds.width() - arcWidth * 2) * 0.34f
-        val textMaxWidth = (diagramBounds.width() - arcWidth * 2) * 0.9f
+        val textMinWidth = (diagramBounds.width() - arcWidth * 2) * TEXT_MIN_WIDTH_FACTOR
+        val textMaxWidth = (diagramBounds.width() - arcWidth * 2) * TEXT_MAX_WIDTH_FACTOR
 
         textSize = if (textSize == AUTO_SIZE_VALUE) {
-            val testTextSize = 100f
-            textPaint.textSize = testTextSize
+            textPaint.textSize = TEST_TEXT_SIZE
             textPaint.getTextBounds(MAX_VALUE_TEXT, 0, MAX_VALUE_TEXT.length, textBounds)
             val testTextWidth = textBounds.width().toFloat()
-            testTextSize * textMaxWidth / testTextWidth
+            TEST_TEXT_SIZE * textMaxWidth / testTextWidth
         } else {
-            val testTextSize = textSize
             textPaint.textSize = textSize
             textPaint.getTextBounds(MAX_VALUE_TEXT, 0, MAX_VALUE_TEXT.length, textBounds)
             val currentTextWidth = textBounds.width().toFloat()
             val desiredTextWidth = min(max(currentTextWidth, textMinWidth), textMaxWidth)
-            testTextSize * desiredTextWidth / currentTextWidth
+            textSize * desiredTextWidth / currentTextWidth
         }
 
         textPaint.textSize = textSize
@@ -212,6 +202,12 @@ class CircleDiagramView(
 
         private const val START_ANGLE = 90f
         private const val MAX_ANGLE = 360f
+
+        private const val ARC_MIN_WIDTH_FACTOR = 0.05f
+        private const val ARC_MAX_WIDTH_FACTOR = 0.2f
+        private const val TEXT_MIN_WIDTH_FACTOR = 0.34f
+        private const val TEXT_MAX_WIDTH_FACTOR = 0.9f
+        private const val TEST_TEXT_SIZE = 100f
 
         private const val DEFAULT_FILLED_COLOR = Color.BLACK
         private const val DEFAULT_BLANK_COLOR = Color.GRAY

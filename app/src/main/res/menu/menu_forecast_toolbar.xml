@@ -6,14 +6,12 @@
         android:id="@+id/item_set_current"
         android:icon="@drawable/ic_current_city"
         app:showAsAction="ifRoom"
-        android:contentDescription="@string/set_as_current_description"
-        />
+        android:contentDescription="@string/set_as_current_description" />
 
     <item android:title="@string/share"
         android:id="@+id/item_share"
         android:icon="@drawable/ic_share"
         app:showAsAction="ifRoom"
-        android:contentDescription="@string/share_description"
-        />
+        android:contentDescription="@string/share_description" />
 
 </menu>

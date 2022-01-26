@@ -56,11 +56,11 @@
         android:id="@+id/weatherIconImageView"
         android:layout_width="@dimen/weather_icon_size"
         android:layout_height="@dimen/weather_icon_size"
-        tools:src="@drawable/weather_placeholder"
         android:contentDescription="@string/weather_icon_description"
         app:layout_constraintBottom_toBottomOf="@id/weatherDescriptionTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/weatherDescriptionTextView" />
+        app:layout_constraintTop_toTopOf="@id/weatherDescriptionTextView"
+        tools:src="@drawable/weather_placeholder" />
 
     <TextView
         android:id="@+id/humidityTitleTextView"
@@ -77,12 +77,12 @@
         android:id="@+id/humidityCircleDiagramView"
         android:layout_width="@dimen/humidity_view_size"
         android:layout_height="@dimen/humidity_view_size"
-        app:textSize="@dimen/text_medium"
-        app:arcWidth="@dimen/humidity_arc_width"
         android:layout_marginTop="@dimen/margin_medium"
+        app:arcWidth="@dimen/humidity_arc_width"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/humidityBarrier"
         app:layout_constraintTop_toBottomOf="@id/humidityTitleTextView"
+        app:textSize="@dimen/text_medium"
         tools:value="55" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -106,11 +106,10 @@
         android:layout_height="wrap_content"
         android:text="@string/pressure"
         android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toTopOf="@id/windTitleTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/generalDataBarrier"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintBottom_toTopOf="@id/windTitleTextView"
-        />
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
         android:id="@+id/windTitleTextView"
@@ -118,21 +117,20 @@
         android:layout_height="wrap_content"
         android:text="@string/wind"
         android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toTopOf="@id/precipitationTitleTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pressureTitleTextView"
-        app:layout_constraintBottom_toTopOf="@id/precipitationTitleTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/pressureTitleTextView" />
 
     <TextView
         android:id="@+id/precipitationTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_large"
         android:text="@string/precipitation_probability"
         android:textColor="?android:attr/textColorSecondary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/windTitleTextView"
         app:layout_constraintBottom_toTopOf="@id/mornTempTextView"
-        android:layout_marginBottom="@dimen/margin_large"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/windTitleTextView" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/additionalDataTitlesBarrier"
@@ -182,10 +180,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_large"
+        app:layout_constraintBottom_toTopOf="@id/sunriseTitleTextView"
         app:layout_constraintEnd_toStartOf="@id/dayTempTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/precipitationTitleTextView"
-        app:layout_constraintBottom_toTopOf="@id/sunriseTitleTextView"
         tools:text="3°" />
 
     <TextView
@@ -222,40 +220,40 @@
         android:id="@+id/mornTempTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/morning"
         android:layout_marginBottom="@dimen/margin_small"
-        app:layout_constraintEnd_toEndOf="@id/mornTempTextView"
+        android:text="@string/morning"
         app:layout_constraintBottom_toTopOf="@id/mornTempTextView"
+        app:layout_constraintEnd_toEndOf="@id/mornTempTextView"
         app:layout_constraintStart_toStartOf="@id/mornTempTextView" />
 
     <TextView
         android:id="@+id/dayTempTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/day"
         android:layout_marginBottom="@dimen/margin_small"
-        app:layout_constraintEnd_toEndOf="@id/dayTempTextView"
+        android:text="@string/day"
         app:layout_constraintBottom_toTopOf="@id/dayTempTextView"
+        app:layout_constraintEnd_toEndOf="@id/dayTempTextView"
         app:layout_constraintStart_toStartOf="@id/dayTempTextView" />
 
     <TextView
         android:id="@+id/eveTempTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/evening"
         android:layout_marginBottom="@dimen/margin_small"
-        app:layout_constraintEnd_toEndOf="@id/eveTempTextView"
+        android:text="@string/evening"
         app:layout_constraintBottom_toTopOf="@id/eveTempTextView"
+        app:layout_constraintEnd_toEndOf="@id/eveTempTextView"
         app:layout_constraintStart_toStartOf="@id/eveTempTextView" />
 
     <TextView
         android:id="@+id/nightTempTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/night"
         android:layout_marginBottom="@dimen/margin_small"
-        app:layout_constraintEnd_toEndOf="@id/nightTempTextView"
+        android:text="@string/night"
         app:layout_constraintBottom_toTopOf="@id/nightTempTextView"
+        app:layout_constraintEnd_toEndOf="@id/nightTempTextView"
         app:layout_constraintStart_toStartOf="@id/nightTempTextView" />
 
     <TextView
